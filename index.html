@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameVault - Premium Game Downloads</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="image/Untitled-2.ico" type="image/x-icon">
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #03346E;
+            --accent-color: #00b894;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #2d3436;
+            --text-secondary: #636e72;
+            --card-bg: #ffffff;
+            --border-color:rgb(184, 185, 185);
+             --gradient-primary: linear-gradient(135deg, #ff0000 0%,  #1A0B3D 100%);
+            --gradient-secondary:  linear-gradient(135deg, #00F5FF 0%, #0099CC 50%, #1A0B3D 100%);
+            --shadow-light: 0 4px 20px rgba(108, 92, 231, 0.1);
+            --shadow-hover: 0 8px 40px rgba(108, 92, 231, 0.2);
+        }
+
+        [data-theme="dark"] {
+           --bg-primary: #0A0A0F; /* Deeper black */
+    --bg-secondary: #111118; /* Rich dark */
+    --text-primary: #FFFFFF; /* Pure white text */
+    --text-secondary: #A0A0B8; /* Cooler secondary text */
+    --card-bg: #0F1419; /* Darker cards */
+    --border-color: #2A2A3E; /* Darker borders */
+    --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-primary);
+            border-radius: 4px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            padding: 1rem 0;
+        }
+
+        [data-theme="dark"] .navbar {
+            background: rgba(26, 26, 26, 0.95);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.8rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            color: var(--text-primary) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: var(--gradient-primary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-light);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('image/bg.png' ) no-repeat center center/cover;
+            animation: zoomInOut 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes zoomInOut {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        .btn-hero {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            margin: 0.5rem;
+        }
+
+        .btn-hero:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: floatAnimation 15s infinite linear;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            left: 80%;
+            animation-delay: -5s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 60%;
+            animation-delay: -10s;
+        }
+
+        @keyframes floatAnimation {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-100px) rotate(180deg); }
+            100% { transform: translateY(0px) rotate(360deg); }
+        }
+
+        /* Game Categories */
+        .categories {
+            padding: 5rem 0;
+            background: var(--bg-secondary);
+        }
+
+        .category-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            height: 100%;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            transition: all 0.5s ease;
+            z-index: 0;
+            opacity: 0.1;
+        }
+
+        .category-card:hover::before {
+            left: 0;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-desc {
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Game Cards */
+        .games-section {
+            padding: 5rem 0;
+        }
+
+        .game-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            height: 100%;
+            position: relative;
+        }
+
+        
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 200px;
+            background: var(--gradient-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-image::before {
+            content: '🎮';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            opacity: 0.3;
+        }
+
+        .game-info {
+            padding: 1.5rem;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .game-category {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .game-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #ffd700;
+            margin-right: 0.5rem;
+        }
+
+        .btn-download {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-light);
+            background-color: var(--gradient-secondary);
+        }
+
+        /* Filter Buttons */
+        .filter-buttons {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            margin: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--gradient-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Stats Section */
+        .stats {
+            background: url('image/bg1.png' ) no-repeat center center/cover;
+            padding: 5rem 0;
+            color: white;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary);
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-color);
+            
+        }
+
+        .footer-title p{
+            color: #ffffff;
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-light);
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto 3rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3rem;
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(108, 92, 231, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .category-card {
+                margin-bottom: 2rem;
+            }
+
+            .game-card {
+                margin-bottom: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Scroll Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-gamepad me-2"></i>GameVault</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#games">Games</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#categories">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="get-software.html">Software</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contac.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="game-request.html">Request</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn-donate" onclick="showNotification('Thank you for considering a donation!', 'info')">
+                            <i class="fas fa-heart me-2"></i><a href="donate.html">Donate</a>
+                        </button>
+                        <button class="theme-toggle ms-3" onclick="toggleTheme()">
+                            <i class="fas fa-moon" id="theme-icon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="floating-elements">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+        
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content" data-aos="fade-up">
+                    <h1>Steam Game <br> <b style="color: #DC2525;">Free</b>  Downloads</h1>
+                    <p>Unlock the world of STEM—100% free games, ready to download!.</p>
+                    <a href="#games" class="btn-hero">
+                        <i class="fas fa-download me-2"></i>Browse Games
+                    </a>
+                    <a href="#categories" class="btn-hero">
+                        <i class="fas fa-list me-2"></i>Categories
+                    </a>
+                </div>
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-center">
+                        <i class="fas fa-gamepad" style="font-size: 15rem; color: rgba(255,255,255,0.2);"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="categories">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="display-4 fw-bold mb-3">Game Categories</h2>
+                <p class="lead">Explore games by your favorite genres</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="category-card" onclick="filterGames('action')">
+                        <div class="category-icon">
+                            <i class="fas fa-fist-raised"></i>
+                        </div>
+                        <h3 class="category-title">Action</h3>
+                        <p class="category-desc">Fast-paced games with thrilling combat and adventure</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="category-card" onclick="filterGames('adventure')">
+                        <div class="category-icon">
+                            <i class="fas fa-map"></i>
+                        </div>
+                        <h3 class="category-title">Adventure</h3>
+                        <p class="category-desc">Explore vast worlds and embark on epic journeys</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="category-card" onclick="filterGames('puzzle')">
+                        <div class="category-icon">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                        <h3 class="category-title">Puzzle</h3>
+                        <p class="category-desc">Challenge your mind with brain-teasing puzzles</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="category-card" onclick="filterGames('racing')">
+                        <div class="category-icon">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <h3 class="category-title">Racing</h3>
+                        <p class="category-desc">Feel the speed in high-octane racing games</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Section -->
+    <section id="games" class="games-section">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="display-4 fw-bold mb-3">Featured Games</h2>
+                <p class="lead">Download your favorite games instantly</p>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-container" data-aos="fade-up">
+                <div class="search-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <input type="text" class="search-input" placeholder="Search games..." id="searchInput" onkeyup="searchGames()">
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="filter-buttons" data-aos="fade-up">
+                <button class="filter-btn active" onclick="filterGames('all')">All Games</button>
+                <button class="filter-btn" onclick="filterGames('action')">Action</button>
+                <button class="filter-btn" onclick="filterGames('adventure')">Adventure</button>
+                <button class="filter-btn" onclick="filterGames('puzzle')">Puzzle</button>
+                <button class="filter-btn" onclick="filterGames('racing')">Racing</button>
+            </div>
+
+            <!-- Games Grid -->
+            <div class="row g-4" id="gamesGrid">
+                <!-- Games will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="10000">0</span>
+                        <div class="stat-label">Games Available</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="50000">0</span>
+                        <div class="stat-label">Downloads</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="5000">0</span>
+                        <div class="stat-label">Happy Users</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="24">0</span>
+                        <div class="stat-label">Support Hours</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+     <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h3 class="footer-title">
+                        <i class="fas fa-gamepad me-2" style="color:#ff0000;"></i>
+                        GameVault
+                    </h3>
+                    <p class="">Your ultimate destination for premium game downloads. Safe, fast, and reliable.</p>
+                    <div class="social-links mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <a href="index.html#home" class="footer-link">Home</a>
+                    <a href="index.html#games" class="footer-link">Games</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="blog.html" class="footer-link">Blog</a>
+                    <a href="download-guide.html" class="footer-link">Download Guide</a>
+                    <a href="donate.html" class="footer-link">Donate</a>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Categories</h5>
+                    <a href="index.html#categories" class="footer-link">Action</a>
+                    <a href="index.html#categories" class="footer-link">Puzzle</a>
+                    <a href="index.html#categories" class="footer-link">Adventure</a>
+                    <a href="index.html#categories" class="footer-link">Racing</a>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Support</h5>
+                    <a href="help-center.html" class="footer-link">Help Center</a>
+                    <a href="download-guide.html" class="footer-link">Download Guide</a>
+                    <a href="system-requirements.html" class="footer-link">System Requirements</a>
+                    <a href="report-issue.html" class="footer-link">Report Issue</a>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Legal</h5>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">DMCA</a>
+                    <a href="#" class="footer-link">Refund Policy</a>
+                </div>
+            </div>
+            
+            <hr style="border-color: var(--border-color); margin: 2rem 0;">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 ">&copy; 2025 GameVault. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0 ">Made with <i class="fas fa-gamepad" style="color: #ff0000;"></i> Shehan chamika</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <script>
+        // Sample Games Data (In real implementation, this would come from PHP/Database)
+        const games = [
+            {
+                id: 1,
+                title: "Cyberpunk 2077",
+                category: "action",
+                rating: 4.8,
+                downloads: 15420,
+                size: "4.1MB",
+                Image: "https://www.nvidia.com/content/dam/en-zz/Solutions/geforce/news/cyberpunk-2077-system-requirements/cyberpunk-2077-recommended-system-specs-ogimage.jpg" ,
+                description: "Cyberpunk 2077 is an open-world"
+            },
+            {
+                id: 2,
+                title: "Assassin’s Creed Shadows",
+                category: "action",
+                rating: 4.6,
+                downloads: 12350,
+                size: "3.6MB",
+                Image: "https://staticctf.ubisoft.com/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/1RLdppgLllgGZlkjuvHBu6/237f7e968827f4abda462a311a0f1faf/RED_KEYART_STD_RGB_WW.jpg",
+                description: "Experience an epic action-adventure story set in feudal Japan!"
+            },
+            {
+                id: 3,
+                title: "Grand Theft Auto V Enhanced",
+                category: "action",
+                rating: 4.4,
+                downloads: 8970,
+                size: "3.0MB",
+                Image: "https://cdn.images.express.co.uk/img/dynamic/143/590x/2022020_1.jpg",
+                description: "Experience entertainment blockbusters Grand Theft Auto V and Grand Theft Auto Online"
+            },
+            {
+                id: 4,
+                title: "Assassin’s Creed Valhalla",
+                category: "action",
+                rating: 4.7,
+                downloads: 18650,
+                size: "5.4MB",
+                Image: "https://gaming-cdn.com/images/products/6147/orig/assassin-s-creed-valhalla-pc-game-ubisoft-connect-europe-cover.jpg?v=1709130520",
+                description: "Assassin’s Creed Valhalla is an action-adventure game in which you are a Viking warrior raised on tales of battle and glory."
+            },
+            {
+                id: 5,
+                title: "Forza Horizon 5",
+                category: "racing",
+                rating: 4.5,
+                downloads: 11200,
+                size: "10MB",
+                Image: "https://www.sumo-digital.com/wp-content/uploads/2021/11/forza-horizon-5-featured.jpg",
+                description: "Explore the vibrant open world landscapes of Mexico with limitless, fun driving action in the world’s greatest cars."
+            },
+            {
+                id: 6,
+                title: "Call of Duty: Black Ops III",
+                category: "action",
+                rating: 4.9,
+                downloads: 22100,
+                size: "19.5MB",
+                Image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd-TEZ6s-lRjW0jAoL8iVKfVBye3Mo6ty-YQ&s",
+
+                description: "Call of Duty®: Black Ops III Zombies Chronicles Edition includes the full base game plus the Zombies Chronicles content expansion."
+            },
+            {
+                id: 7,
+                title: "Battlefield™ V",
+                category: "action",
+                rating: 4.3,
+                downloads: 6450,
+                size: "6.1MB",
+                Image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrrPHZ_okdEhFPJIoYgb4valRd_kbGHc86Qg&s",
+                description: "This is the ultimate Battlefield V experience. Enter mankind’s greatest conflict with the complete arsenal of weapons, vehicles, and gadgets plus the best customization content of Year 1 and 2."
+            },
+            {
+                id: 8,
+                title: "Ghost of Tsushima ",
+                category: "action",
+                rating: 4.6,
+                downloads: 14300,
+                size: "2.2MB",
+                Image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzapcOAzmiasGyIKbUAD_Ffpf9BQviJ5lUFA&s",
+                description: "A storm is coming. Venture into the complete Ghost of Tsushima DIRECTOR’S CUT on PC"
+            },
+            {
+                id: 9,
+                title: "Counter‑Strike 2",
+                category: "action",
+                rating: 4.6,
+                downloads: 14300,
+                size: "1.351KB",
+                Image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcooanR2yM5r6AqqwhY9mp6U7t54E_phKCDA&s",
+                description: "For over two decades, Counter-Strike has offered an elite competitive experience"
+            },
+            {
+                id: 10,
+                title: "Red Dead Redemption II",
+                category: "action",
+                rating: 4.6,
+                downloads: 14300,
+                size: "3.9MB",
+                Image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeMmKiD9ge2VTy2CTf2VV05zq9dnrw-NQMdQ&ss",
+                description: "Winner of over 175 Game of the Year Awards and recipient of over 250 perfect scores"
+            },
+            {
+                id: 11,
+                title: "God of War",
+                category: "action",
+                rating: 4.6,
+                downloads: 14300,
+                size: "12.6MB",
+                Image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWN1Y_SxQ6-BZnbTR6zotsOHebxeO5ofL9fw&s",
+                description: "His vengeance against the Gods of Olympus years behind him, Kratos now lives as a man in the realm of Norse Gods and monsters."
+            },
+            {
+                id: 12,
+                title: "God of War Ragnarök",
+                category: "action",
+                rating: 4.6,
+                downloads: 14300,
+                size: "6.6MB",
+                Image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-sFQyKNESTiCrXXWRaNExifj-B7y4vDXrhA&s",
+                description: "Kratos and Atreus embark on a mythic journey for answers before Ragnarök arrives – now on PC."
+            },
+            {
+                id: 13,
+                title: "Black Myth: Wukong",
+                category: "action",
+                rating: 4.6,
+                downloads: 14300,
+                size: "4.6MB",
+                Image: "https://assets-prd.ignimgs.com/2024/08/18/blackmyth-1723969364570.jpg",
+                description: "Black Myth: Wukong is an action RPG rooted in Chinese mythology. "
+            }
+        ];
+
+        let filteredGames = [...games];
+        let currentTheme = 'light';
+
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Theme Toggle Function
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (currentTheme === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fas fa-sun';
+                currentTheme = 'dark';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.removeAttribute('data-theme');
+                themeIcon.className = 'fas fa-moon';
+                currentTheme = 'light';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Load saved theme
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').className = 'fas fa-sun';
+                currentTheme = 'dark';
+            }
+        }
+
+        // Render Games
+        function renderGames(gamesToRender = filteredGames) {
+            const gamesGrid = document.getElementById('gamesGrid');
+            
+            if (gamesToRender.length === 0) {
+                gamesGrid.innerHTML = `
+                    <div class="col-12 text-center">
+                        <div class="py-5">
+                            <i class="fas fa-search" style="font-size: 4rem; color: var(--text-secondary); opacity: 0.5;"></i>
+                            <h3 class="mt-3 text-muted">No games found</h3>
+                            <p class="text-muted">Try adjusting your search or filter criteria</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            gamesGrid.innerHTML = gamesToRender.map((game, index) => `
+                <div class="col-lg-3 col-md-6 game-item" data-category="${game.category}" data-aos="fade-up" data-aos-delay="${index * 100}">
+                    <div class="game-card">
+                        <div class="game-image position-relative" style="background-image: url('${game.Image}'); background-size: cover; background-position: center;">
+                            <div class="position-absolute top-0 end-0 m-3">
+                                <span class="badge" style="background: var(--gradient-primary); font-size: 0.8rem;">
+                                    ${game.size}
+                                </span>
+                            </div>
+                            <div class="position-absolute bottom-0 start-0 m-3">
+                                <span class="badge bg-success">
+                                    <i class="fas fa-download me-1"></i>${game.downloads.toLocaleString()}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <h5 class="game-title"><a href="game-details.html?id=${game.id}" style="text-decoration: none; color: inherit;">${game.title}</a></h5>
+                            <div class="game-category text-capitalize">
+                                <i class="fas fa-tag me-2"></i>${game.category}
+                            </div>
+                            <div class="game-rating">
+                                <div class="stars">
+                                    ${generateStars(game.rating)}
+                                </div>
+                                <span class="text-muted">${game.rating}/5</span>
+                            </div>
+                            <p class=" small mb-3" color: var(--text-secondary);>${game.description}</p>
+                            <button class="btn-download" onclick="downloadGame(${game.id})">
+                                <i class="fas fa-download me-2"></i><a href="game-details.html?id=${game.id}" style="text-decoration: none; color: inherit;">Download Now</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Re-initialize AOS for new elements
+            AOS.refresh();
+        }
+
+        // Generate Star Rating
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            let stars = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            
+            return stars;
+        }
+
+        // Filter Games
+        function filterGames(category) {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => btn.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            
+            if (category === 'all') {
+                filteredGames = [...games];
+            } else {
+                filteredGames = games.filter(game => game.category === category);
+            }
+            
+            renderGames(filteredGames);
+        }
+
+        // Search Games
+        function searchGames() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const searchResults = filteredGames.filter(game => 
+                game.title.toLowerCase().includes(searchTerm) ||
+                game.description.toLowerCase().includes(searchTerm) ||
+                game.category.toLowerCase().includes(searchTerm)
+            );
+            
+            renderGames(searchResults);
+        }
+
+        // Download Game Function
+        function downloadGame(gameId) {
+            const game = games.find(g => g.id === gameId);
+            const button = event.target;
+            const originalText = button.innerHTML;
+            
+            // Show loading state
+            button.innerHTML = '<span class="loading me-2"></span>Preparing Download...';
+            button.disabled = true;
+            
+            // Simulate download preparation
+            setTimeout(() => {
+                button.innerHTML = '<i class="fas fa-check me-2"></i>Download Started!';
+                button.style.background = 'var(--gradient-secondary)';
+                
+                // Show download notification
+                showNotification(`${game.title} download started!`, 'success');
+                
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                    button.style.background = 'var(--gradient-primary)';
+                }, 3000);
+                
+                // In real implementation, this would trigger actual download
+                // window.location.href = `download.php?id=${gameId}`;
+            }, 2000);
+        }
+
+        // Show Notification
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : 'info'} position-fixed`;
+            notification.style.cssText = `
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                min-width: 300px;
+                box-shadow: var(--shadow-hover);
+                border: none;
+                border-radius: 10px;
+                animation: slideInRight 0.5s ease;
+            `;
+            
+            notification.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'} me-2"></i>
+                    <span>${message}</span>
+                    <button type="button" class="btn-close ms-auto" onclick="this.parentElement.parentElement.remove()"></button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.style.animation = 'slideOutRight 0.5s ease';
+                    setTimeout(() => notification.remove(), 500);
+                }
+            }, 5000);
+        }
+
+        // Counter Animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                const duration = 2000; // 2 seconds
+                const increment = target / (duration / 16); // 60fps
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        counter.textContent = Math.floor(current).toLocaleString();
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target.toLocaleString();
+                    }
+                };
+                
+                updateCounter();
+            });
+        }
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    
+                    // Trigger counter animation when stats section is visible
+                    if (entry.target.classList.contains('stats')) {
+                        animateCounters();
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll-based navbar styling
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = currentTheme === 'dark' 
+                    ? 'rgba(26, 26, 26, 0.98)' 
+                    : 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = 'var(--shadow-light)';
+            } else {
+                navbar.style.background = currentTheme === 'dark' 
+                    ? 'rgba(26, 26, 26, 0.95)' 
+                    : 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
+            renderGames();
+            
+            // Observe elements for scroll animations
+            document.querySelectorAll('.scroll-reveal, .stats').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Add custom CSS animations
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideInRight {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                
+                @keyframes slideOutRight {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+                
+                .game-card {
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+                
+                .game-card:hover {
+                    transform: translateY(-10px) scale(1.02);
+                }
+                
+                .category-card {
+                    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+                
+                .category-card:hover {
+                    transform: translateY(-15px) rotateY(5deg);
+                }
+                
+                .btn-download {
+                    position: relative;
+                    overflow: hidden;
+                }
+                
+                .btn-download::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+                    transition: left 0.5s;
+                }
+                
+                .btn-download:hover::before {
+                    left: 100%;
+                }
+            `;
+            document.head.appendChild(style);
+        });
+
+        // Add some interactive Easter eggs
+        let clickCount = 0;
+        document.querySelector('.navbar-brand').addEventListener('click', function(e) {
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 5) {
+                showNotification('🎮 Easter Egg Found! You are a true gamer!', 'success');
+                clickCount = 0;
+                
+                // Add some fun confetti effect
+                const colors = ['#6c5ce7', '#fd79a8', '#00b894', '#00cec9'];
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.style.cssText = `
+                            position: fixed;
+                            top: -10px;
+                            left: ${Math.random() * 100}%;
+                            width: 10px;
+                            height: 10px;
+                            background: ${colors[Math.floor(Math.random() * colors.length)]};
+                            z-index: 9999;
+                            animation: confettiFall 3s linear forwards;
+                            transform: rotate(${Math.random() * 360}deg);
+                        `;
+                        document.body.appendChild(confetti);
+                        
+                        setTimeout(() => confetti.remove(), 3000);
+                    }, i * 50);
+                }
+                
+                // Add confetti animation
+                if (!document.getElementById('confetti-style')) {
+                    const confettiStyle = document.createElement('style');
+                    confettiStyle.id = 'confetti-style';
+                    confettiStyle.textContent = `
+                        @keyframes confettiFall {
+                            to {
+                                transform: translateY(100vh) rotate(720deg);
+                                opacity: 0;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(confettiStyle);
+                }
+            }
+        });
+    </script>
+
+   
+    
+</body>
+</html>

@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - GameVault</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- AOS for Scroll Animations -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="image/Untitled-2.ico" type="image/x-icon">
+    <style>
+        /* CSS Variables - Taken from your index.php */
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #03346E;
+            --accent-color: #00b894;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #2d3436;
+            --text-secondary: #636e72;
+            --card-bg: #ffffff;
+            --border-color:rgb(184, 185, 185);
+             --gradient-primary: linear-gradient(135deg, #ff0000 0%,  #1A0B3D 100%);
+            --gradient-secondary:  linear-gradient(135deg, #00F5FF 0%, #0099CC 50%, #1A0B3D 100%);
+            --shadow-light: 0 4px 20px rgba(108, 92, 231, 0.1);
+            --shadow-hover: 0 8px 40px rgba(108, 92, 231, 0.2);
+        }
+
+        [data-theme="dark"] {
+           --bg-primary: #0A0A0F; /* Deeper black */
+    --bg-secondary: #111118; /* Rich dark */
+    --text-primary: #FFFFFF; /* Pure white text */
+    --text-secondary: #A0A0B8; /* Cooler secondary text */
+    --card-bg: #0F1419; /* Darker cards */
+    --border-color: #2A2A3E; /* Darker borders */
+    --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Global styles - Taken from your index.php */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar Styling - Taken from your index.php */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-primary);
+            border-radius: 4px;
+        }
+
+        /* Navigation - Taken from your index.php */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            padding: 1rem 0;
+        }
+
+        [data-theme="dark"] .navbar {
+            background: rgba(26, 26, 26, 0.95);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.8rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            color: var(--text-primary) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: var(--gradient-primary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Theme Toggle Button - Taken from your index.php */
+        .theme-toggle {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-light);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Hero Section - New for about page */
+        .about-hero {
+            background: var(--gradient-primary);
+            padding: 8rem 0 5rem;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('image/bg.png')  ;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .about-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-hero p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Section Styling */
+        .section-padding {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        /* About Section */
+        .about-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Mission & Vision Section */
+        .mv-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            height: 100%;
+            box-shadow: var(--shadow-light);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mv-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-secondary);
+            transition: all 0.5s ease;
+            z-index: 0;
+            opacity: 0.05;
+        }
+
+        .mv-card:hover::before {
+            left: 0;
+        }
+
+        .mv-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .mv-icon {
+            font-size: 3rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .mv-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .mv-text {
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Team Section */
+        .team-member-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            height: 100%;
+            box-shadow: var(--shadow-light);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .team-member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .team-member-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            transition: transform 0.5s ease;
+            transform: scaleY(0);
+            transform-origin: bottom;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .team-member-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .team-member-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border: 5px solid var(--primary-color);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 0 5px rgba(108, 92, 231, 0.2);
+        }
+
+        .team-member-card:hover .team-member-img {
+            border-color: var(--secondary-color);
+        }
+
+        .team-member-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .team-member-role {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .team-member-social a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin: 0 0.4rem;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-light);
+            text-decoration: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .team-member-social a:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Testimonials Section */
+        .testimonial-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            height: 100%;
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .testimonial-quote {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .testimonial-author-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-author-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .testimonial-author-role {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* Footer - Taken from your index.php */
+        .footer {
+            background: var(--bg-secondary);
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .footer .social-links a { /* Specificity for footer social links */
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer .social-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-light);
+        }
+
+        /* Responsive Design - Adjusted for about page */
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .mv-card, .team-member-card, .testimonial-card {
+                margin-bottom: 2rem;
+            }
+        }
+
+        /* Scroll Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom CSS animations and transitions (from index.php) */
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation - As per your index.php -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><i class="fas fa-gamepad me-2"></i>GameVault</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#games">Games</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#categories">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="get-software.html">Software</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contac.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn-donate" onclick="showNotification('Thank you for considering a donation!', 'info')">
+                            <i class="fas fa-heart me-2"></i><a href="donate.html">Donate</a>
+                        </button>
+                        <button class="theme-toggle ms-3" onclick="toggleTheme()">
+                            <i class="fas fa-moon" id="theme-icon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="about-hero-content" data-aos="fade-up">
+            <h1>About GameVault</h1>
+            <p>Discover our story, mission, and the passionate team behind your favorite game downloads.</p>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="section-padding" id="about-us-section">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Our Story</h2>
+                <p class="section-subtitle">A journey driven by passion for gaming.</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10 about-content" data-aos="fade-up" data-aos-delay="100">
+                    <p>Founded in 2020, GameVault started with a simple vision: to create a secure, reliable, and user-friendly platform for gamers worldwide to access premium titles. What began as a small project by a group of avid gamers has grown into a thriving community and a leading destination for digital game downloads.</p>
+                    <p>We believe in the power of gaming to connect people, inspire creativity, and provide unparalleled entertainment. Our commitment goes beyond just offering games; we strive to curate a collection that guarantees quality, performance, and an immersive experience for every player.</p>
+                    <p>At GameVault, transparency, customer satisfaction, and continuous innovation are at the core of everything we do. We are constantly working to expand our library, enhance our platform, and provide exceptional support to our global community of gamers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision Section -->
+    <section class="section-padding " id="mission-vision-section" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Mission & Vision</h2>
+                <p class="section-subtitle">Our guiding principles and aspirations.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="100">
+                    <div class="mv-card">
+                        <div class="mv-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3 class="mv-title">Our Mission</h3>
+                        <p class="mv-text">To empower gamers worldwide with easy, secure, and instant access to a diverse and high-quality collection of premium games, fostering a vibrant and connected gaming community.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="200">
+                    <div class="mv-card">
+                        <div class="mv-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3 class="mv-title">Our Vision</h3>
+                        <p class="mv-text">To be the most trusted and preferred platform for digital game downloads, continuously innovating to meet the evolving needs of gamers and revolutionizing the gaming experience.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section-padding" id="team-section">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Meet Our Team</h2>
+                <p class="section-subtitle">The passionate minds behind GameVault.</p>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="team-member-card">
+                        <img src="https://placehold.co/150x150/6c5ce7/ffffff?text=John" alt="John Doe" class="team-member-img">
+                        <h4 class="team-member-name">John Doe</h4>
+                        <p class="team-member-role">CEO & Founder</p>
+                        <div class="team-member-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="team-member-card">
+                        <img src="https://placehold.co/150x150/fd79a8/ffffff?text=Jane" alt="Jane Smith" class="team-member-img">
+                        <h4 class="team-member-name">Jane Smith</h4>
+                        <p class="team-member-role">Chief Product Officer</p>
+                        <div class="team-member-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="team-member-card">
+                        <img src="https://placehold.co/150x150/00b894/ffffff?text=Mike" alt="Mike Johnson" class="team-member-img">
+                        <h4 class="team-member-name">Mike Johnson</h4>
+                        <p class="team-member-role">Lead Developer</p>
+                        <div class="team-member-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="team-member-card">
+                        <img src="https://placehold.co/150x150/00cec9/ffffff?text=Sarah" alt="Sarah Davis" class="team-member-img">
+                        <h4 class="team-member-name">Sarah Davis</h4>
+                        <p class="team-member-role">Marketing Manager</p>
+                        <div class="team-member-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section-padding " id="testimonials-section" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">What Our Users Say</h2>
+                <p class="section-subtitle">Hear from our satisfied gamers.</p>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-card">
+                        <p class="testimonial-quote">"GameVault has revolutionized how I discover and download games. The platform is incredibly user-friendly, and the game selection is fantastic. Highly recommend!"</p>
+                        <img src="https://placehold.co/80x80/6c5ce7/ffffff?text=G1" alt="Gamer 1" class="testimonial-author-img">
+                        <h5 class="testimonial-author-name">GamerPro77</h5>
+                        <p class="testimonial-author-role">Verified User</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-card">
+                        <p class="testimonial-quote">"The download speeds are incredible, and I've never faced any issues. GameVault makes getting new games a breeze. Customer support is also top-notch!"</p>
+                        <img src="https://placehold.co/80x80/fd79a8/ffffff?text=G2" alt="Gamer 2" class="testimonial-author-img">
+                        <h5 class="testimonial-author-name">PixelKnight</h5>
+                        <p class="testimonial-author-role">Long-time Member</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="testimonial-card">
+                        <p class="testimonial-quote">"I love the variety of games available on GameVault. From indie gems to AAA titles, they have it all. It's truly a vault of gaming treasures!"</p>
+                        <img src="https://placehold.co/80x80/00b894/ffffff?text=G3" alt="Gamer 3" class="testimonial-author-img">
+                        <h5 class="testimonial-author-name">JoyfulGamer</h5>
+                        <p class="testimonial-author-role">Enthusiastic Player</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer - As per your index.php -->
+     <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h3 class="footer-title">
+                        <i class="fas fa-gamepad me-2" style="color:#ff0000;"></i>
+                        GameVault
+                    </h3>
+                    <p class="">Your ultimate destination for premium game downloads. Safe, fast, and reliable.</p>
+                    <div class="social-links mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <a href="index.html#home" class="footer-link">Home</a>
+                    <a href="index.html#games" class="footer-link">Games</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="blog.html" class="footer-link">Blog</a>
+                    <a href="download-guide.html" class="footer-link">Download Guide</a>
+                    <a href="donate.html" class="footer-link">Donate</a>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Categories</h5>
+                    <a href="index.html#categories" class="footer-link">Action</a>
+                    <a href="index.html#categories" class="footer-link">Puzzle</a>
+                    <a href="index.html#categories" class="footer-link">Adventure</a>
+                    <a href="index.html#categories" class="footer-link">Racing</a>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Support</h5>
+                    <a href="help-center.html" class="footer-link">Help Center</a>
+                    <a href="download-guide.html" class="footer-link">Download Guide</a>
+                    <a href="system-requirements.html" class="footer-link">System Requirements</a>
+                    <a href="report-issue.html" class="footer-link">Report Issue</a>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Legal</h5>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">DMCA</a>
+                    <a href="#" class="footer-link">Refund Policy</a>
+                </div>
+            </div>
+            
+            <hr style="border-color: var(--border-color); margin: 2rem 0;">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 ">&copy; 2025 GameVault. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0 ">Made with <i class="fas fa-gamepad" style="color: #ff0000;"></i> Shehan chamika</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <script>
+        let currentTheme = 'light'; // Taken from your index.php
+
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Theme Toggle Function - Taken from your index.php
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (currentTheme === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fas fa-sun';
+                currentTheme = 'dark';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.removeAttribute('data-theme');
+                themeIcon.className = 'fas fa-moon';
+                currentTheme = 'light';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Load saved theme - Taken from your index.php
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').className = 'fas fa-sun';
+                currentTheme = 'dark';
+            }
+        }
+
+        // Intersection Observer for scroll animations - Taken from your index.php
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        // Smooth scrolling for navigation links - Taken from your index.php
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll-based navbar styling - Taken from your index.php
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = currentTheme === 'dark' 
+                    ? 'rgba(26, 26, 26, 0.98)' 
+                    : 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = 'var(--shadow-light)';
+            } else {
+                navbar.style.background = currentTheme === 'dark' 
+                    ? 'rgba(26, 26, 26, 0.95)' 
+                    : 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Initialize page and observe elements
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
+            
+            // Observe elements for scroll animations
+            document.querySelectorAll('.scroll-reveal, .about-hero-content, .section-title, .section-subtitle, .about-content, .mv-card, .team-member-card, .testimonial-card').forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // Notification function (Used for confetti animation, kept here to show 'success' type only)
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : 'info'} position-fixed`;
+            notification.style.cssText = `
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                min-width: 300px;
+                box-shadow: var(--shadow-hover);
+                border: none;
+                border-radius: 10px;
+                animation: slideInRight 0.5s ease;
+            `;
+            
+            notification.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'} me-2"></i>
+                    <span>${message}</span>
+                    <button type="button" class="btn-close ms-auto" onclick="this.parentElement.parentElement.remove()"></button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.style.animation = 'slideOutRight 0.5s ease';
+                    setTimeout(() => notification.remove(), 500);
+                }
+            }, 5000);
+        }
+
+        // Easter Egg from index.php
+        let clickCount = 0;
+        document.querySelector('.navbar-brand').addEventListener('click', function(e) {
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 5) {
+                showNotification('🎮 Easter Egg Found! You are a true gamer!', 'success');
+                clickCount = 0;
+                
+                const colors = ['#6c5ce7', '#fd79a8', '#00b894', '#00cec9'];
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.style.cssText = `
+                            position: fixed;
+                            top: -10px;
+                            left: ${Math.random() * 100}%;
+                            width: 10px;
+                            height: 10px;
+                            background: ${colors[Math.floor(Math.random() * colors.length)]};
+                            z-index: 9999;
+                            animation: confettiFall 3s linear forwards;
+                            transform: rotate(${Math.random() * 360}deg);
+                        `;
+                        document.body.appendChild(confetti);
+                        
+                        setTimeout(() => confetti.remove(), 3000);
+                    }, i * 50);
+                }
+                
+                if (!document.getElementById('confetti-style')) {
+                    const confettiStyle = document.createElement('style');
+                    confettiStyle.id = 'confetti-style';
+                    confettiStyle.textContent = `
+                        @keyframes confettiFall {
+                            to {
+                                transform: translateY(100vh) rotate(720deg);
+                                opacity: 0;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(confettiStyle);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

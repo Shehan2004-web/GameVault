@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - GameVault</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- AOS for Scroll Animations -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="image/Untitled-2.ico" type="image/x-icon">
+    <style>
+        /* CSS Variables - Taken from your index.php */
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #03346E;
+            --accent-color: #00b894;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #2d3436;
+            --text-secondary: #636e72;
+            --card-bg: #ffffff;
+            --border-color:rgb(184, 185, 185);
+             --gradient-primary: linear-gradient(135deg, #ff0000 0%,  #1A0B3D 100%);
+            --gradient-secondary:  linear-gradient(135deg, #00F5FF 0%, #0099CC 50%, #1A0B3D 100%);
+            --shadow-light: 0 4px 20px rgba(108, 92, 231, 0.1);
+            --shadow-hover: 0 8px 40px rgba(108, 92, 231, 0.2);
+        }
+
+        [data-theme="dark"] {
+           --bg-primary: #0A0A0F; /* Deeper black */
+    --bg-secondary: #111118; /* Rich dark */
+    --text-primary: #FFFFFF; /* Pure white text */
+    --text-secondary: #A0A0B8; /* Cooler secondary text */
+    --card-bg: #0F1419; /* Darker cards */
+    --border-color: #2A2A3E; /* Darker borders */
+    --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Global styles - Taken from your index.php */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar Styling - Taken from your index.php */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-primary);
+            border-radius: 4px;
+        }
+
+        /* Navigation - Taken from your index.php */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            padding: 1rem 0;
+        }
+
+        [data-theme="dark"] .navbar {
+            background: rgba(26, 26, 26, 0.95);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.8rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            color: var(--text-primary) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: var(--gradient-primary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Theme Toggle Button - Taken from your index.php */
+        .theme-toggle {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-light);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Hero Section for Blog */
+        .blog-hero {
+            background: var(--gradient-primary);
+            padding: 8rem 0 5rem;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+
+        .blog-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('image/bg.png')  ;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .blog-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .blog-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-hero p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Section Styling */
+        .section-padding {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        /* Blog Post Card */
+        .blog-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            height: 100%;
+            position: relative;
+            box-shadow: var(--shadow-light);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 220px;
+            background: var(--gradient-secondary); /* Placeholder gradient */
+            position: relative;
+            overflow: hidden;
+            object-fit: cover;
+        }
+        .blog-image::before {
+            content: '📰'; /* Newspaper icon as placeholder */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            opacity: 0.2;
+            color: white;
+            z-index: 1;
+        }
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .blog-info {
+            padding: 1.5rem;
+        }
+
+        .blog-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .blog-meta {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .blog-meta i {
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .blog-excerpt {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-read-more {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-light);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-read-more:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Footer - Taken from your index.php */
+        .footer {
+            background: var(--bg-secondary);
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .footer .social-links a { /* Specificity for footer social links */
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer .social-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-light);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .blog-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .blog-hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .blog-card {
+                margin-bottom: 2rem;
+            }
+        }
+
+        /* Scroll Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom CSS animations and transitions (from index.php) */
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation - As per your index.php -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><i class="fas fa-gamepad me-2"></i>GameVault</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#games">Games</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#categories">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="get-software.html">Software</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contac.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn-donate" onclick="showNotification('Thank you for considering a donation!', 'info')">
+                            <i class="fas fa-heart me-2"></i><a href="donate.html">Donate</a>
+                        </button>
+                        <button class="theme-toggle ms-3" onclick="toggleTheme()">
+                            <i class="fas fa-moon" id="theme-icon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Hero Section -->
+    <section class="blog-hero">
+        <div class="blog-hero-content" data-aos="fade-up">
+            <h1>GameVault Blog</h1>
+            <p>Stay updated with the latest gaming news, reviews, and insights.</p>
+        </div>
+    </section>
+
+    <!-- Blog Posts Section -->
+    <section class="section-padding" id="blog-posts-section">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Latest Articles</h2>
+                <p class="section-subtitle">Dive into our world of gaming knowledge.</p>
+            </div>
+            <div class="row g-4" id="blogPostsGrid">
+                <!-- Blog posts will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer - As per your index.php -->
+     <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h3 class="footer-title">
+                        <i class="fas fa-gamepad me-2" style="color:#ff0000;"></i>
+                        GameVault
+                    </h3>
+                    <p class="">Your ultimate destination for premium game downloads. Safe, fast, and reliable.</p>
+                    <div class="social-links mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <a href="index.html#home" class="footer-link">Home</a>
+                    <a href="index.html#games" class="footer-link">Games</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="blog.html" class="footer-link">Blog</a>
+                    <a href="download-guide.html" class="footer-link">Download Guide</a>
+                    <a href="donate.html" class="footer-link">Donate</a>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Categories</h5>
+                    <a href="index.html#categories" class="footer-link">Action</a>
+                    <a href="index.html#categories" class="footer-link">Puzzle</a>
+                    <a href="index.html#categories" class="footer-link">Adventure</a>
+                    <a href="index.html#categories" class="footer-link">Racing</a>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Support</h5>
+                    <a href="help-center.html" class="footer-link">Help Center</a>
+                    <a href="download-guide.html" class="footer-link">Download Guide</a>
+                    <a href="system-requirements.html" class="footer-link">System Requirements</a>
+                    <a href="report-issue.html" class="footer-link">Report Issue</a>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Legal</h5>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">DMCA</a>
+                    <a href="#" class="footer-link">Refund Policy</a>
+                </div>
+            </div>
+            
+            <hr style="border-color: var(--border-color); margin: 2rem 0;">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 ">&copy; 2025 GameVault. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0 ">Made with <i class="fas fa-gamepad" style="color: #ff0000;"></i> Shehan chamika</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <script>
+        let currentTheme = 'light'; // Taken from your index.php
+
+        // Sample Blog Posts Data (Ideally would be fetched from a backend/API)
+        const blogPosts = [
+            {
+                id: 1,
+                title: "The Rise of Indie Games: Why Small Studios are Dominating",
+                author: "Sarah GamingWriter",
+                date: "June 10, 2025",
+                image: "https://media.licdn.com/dms/image/v2/D4D12AQEbnq_UIw4Yfw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1711981398423?e=2147483647&v=beta&t=uM2_ANnoHtgsC0EhvsdMDhtWON4jgnxQO3Ypq7tK3mQ",
+                excerpt: "Indie games are carving out a significant niche in the gaming industry, often pushing boundaries with innovative gameplay and unique storytelling...",
+                fullContent: "Full content for 'The Rise of Indie Games...' goes here. This would be a longer text when linking to a single blog post page."
+            },
+            {
+                id: 2,
+                title: "Top 5 Upcoming RPGs You Can't Miss in 2025",
+                author: "RPG Enthusiast",
+                date: "June 05, 2025",
+                image: "https://i.ytimg.com/vi/anx_S5uZBZ0/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLC_yXXNtciUr8xIXx0x3wsmhoQsGg",
+                excerpt: "Get ready for an epic year in role-playing games! We've handpicked the top 5 most anticipated RPGs set to release in 2025 that promise immersive worlds and captivating narratives...",
+                fullContent: "Full content for 'Top 5 Upcoming RPGs...' goes here. This would be a longer text when linking to a single blog post page."
+            },
+            {
+                id: 3,
+                title: "How to Optimize Your PC for Peak Gaming Performance",
+                author: "TechGuru",
+                date: "May 28, 2025",
+                image: "https://www.avadirect.com/blog/wp-content/uploads/2025/02/optimize-gaming-pc.jpg",
+                excerpt: "Experiencing lag or low FPS? Our comprehensive guide will walk you through the essential steps to fine-tune your gaming rig for maximum performance...",
+                fullContent: "Full content for 'How to Optimize Your PC...' goes here. This would be a longer text when linking to a single blog post page."
+            },
+            {
+                id: 4,
+                title: "The Evolution of Gaming Graphics: From Pixels to Ray Tracing",
+                author: "Graphics Geek",
+                date: "May 20, 2025",
+                image: "https://i.ytimg.com/vi/gXJJ9SYvV48/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAl0xsl8t96TjbFuezrKQOLKk7JLg",
+                excerpt: "Join us on a journey through the stunning evolution of gaming graphics, from the humble beginnings of pixel art to the breathtaking realism of ray tracing...",
+                fullContent: "Full content for 'The Evolution of Gaming Graphics...' goes here. This would be a longer text when linking to a single blog post page."
+            },
+            {
+                id: 5,
+                title: "Understanding Game Genres: A Beginner's Guide",
+                author: "Game Scholar",
+                date: "May 15, 2025",
+                image: "https://store.hp.com/app/assets/images/uploads/prod/video-game-genres1597871118726439.jpg",
+                excerpt: "Confused by all the different game genres? This guide breaks down the most popular categories, helping you find your next favorite game...",
+                fullContent: "Full content for 'Understanding Game Genres...' goes here. This would be a longer text when linking to a single blog post page."
+            }
+        ];
+
+
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Theme Toggle Function - Taken from your index.php
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (currentTheme === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fas fa-sun';
+                currentTheme = 'dark';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.removeAttribute('data-theme');
+                themeIcon.className = 'fas fa-moon';
+                currentTheme = 'light';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Load saved theme - Taken from your index.php
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').className = 'fas fa-sun';
+                currentTheme = 'dark';
+            }
+        }
+
+        // Intersection Observer for scroll animations - Taken from your index.php
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        // Smooth scrolling for navigation links - Taken from your index.php
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll-based navbar styling - Taken from your index.php
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = currentTheme === 'dark' 
+                    ? 'rgba(26, 26, 26, 0.98)' 
+                    : 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = 'var(--shadow-light)';
+            } else {
+                navbar.style.background = currentTheme === 'dark' 
+                    ? 'rgba(26, 26, 26, 0.95)' 
+                    : 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Function to render blog posts
+        function renderBlogPosts() {
+            const blogPostsGrid = document.getElementById('blogPostsGrid');
+            blogPostsGrid.innerHTML = ''; // Clear existing content
+
+            blogPosts.forEach((post, index) => {
+                blogPostsGrid.innerHTML += `
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="${index * 100}">
+                        <div class="blog-card">
+                            <div class="blog-image">
+                                <img src="${post.image}" alt="${post.title}" onerror="this.onerror=null;this.src='https://placehold.co/800x450/6c5ce7/ffffff?text=Blog+Post';" />
+                            </div>
+                            <div class="blog-info">
+                                <h3 class="blog-title">${post.title}</h3>
+                                <p class="blog-meta">
+                                    <i class="fas fa-calendar-alt"></i>${post.date}
+                                    <span class="ms-3"><i class="fas fa-user"></i>${post.author}</span>
+                                </p>
+                                <p class="blog-excerpt">${post.excerpt}</p>
+                                <a href="blog-post.html?id=${post.id}" class="btn-read-more">
+                                    <i class="fas fa-book-open me-2"></i>Read More
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Notification function (from index.php)
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : 'info'} position-fixed`;
+            notification.style.cssText = `
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                min-width: 300px;
+                box-shadow: var(--shadow-hover);
+                border: none;
+                border-radius: 10px;
+                animation: slideInRight 0.5s ease;
+            `;
+            
+            notification.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'} me-2"></i>
+                    <span>${message}</span>
+                    <button type="button" class="btn-close ms-auto" onclick="this.parentElement.parentElement.remove()"></button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.style.animation = 'slideOutRight 0.5s ease';
+                    setTimeout(() => notification.remove(), 500);
+                }
+            }, 5000);
+        }
+
+        // Easter Egg from index.php
+        let clickCount = 0;
+        document.querySelector('.navbar-brand').addEventListener('click', function(e) {
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 5) {
+                showNotification('🎮 Easter Egg Found! You are a true gamer!', 'success');
+                clickCount = 0;
+                
+                const colors = ['#6c5ce7', '#fd79a8', '#00b894', '#00cec9'];
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.style.cssText = `
+                            position: fixed;
+                            top: -10px;
+                            left: ${Math.random() * 100}%;
+                            width: 10px;
+                            height: 10px;
+                            background: ${colors[Math.floor(Math.random() * colors.length)]};
+                            z-index: 9999;
+                            animation: confettiFall 3s linear forwards;
+                            transform: rotate(${Math.random() * 360}deg);
+                        `;
+                        document.body.appendChild(confetti);
+                        
+                        setTimeout(() => confetti.remove(), 3000);
+                    }, i * 50);
+                }
+                
+                if (!document.getElementById('confetti-style')) {
+                    const confettiStyle = document.createElement('style');
+                    confettiStyle.id = 'confetti-style';
+                    confettiStyle.textContent = `
+                        @keyframes confettiFall {
+                            to {
+                                transform: translateY(100vh) rotate(720deg);
+                                opacity: 0;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(confettiStyle);
+                }
+            }
+        });
+
+        // Initialize page and observe elements
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
+            renderBlogPosts(); // Render blog posts on page load
+            
+            // Observe elements for scroll animations
+            document.querySelectorAll('.scroll-reveal, .blog-hero-content, .section-title, .section-subtitle, .blog-card').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

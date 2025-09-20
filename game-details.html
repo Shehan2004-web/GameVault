@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Details - GameVault</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- AOS for Scroll Animations -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="image/Untitled-2.ico" type="image/x-icon">
+    <style>
+        /* CSS Variables - Taken from your index.php */
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #03346E;
+            --accent-color: #00b894;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #2d3436;
+            --text-secondary: #636e72;
+            --card-bg: #ffffff;
+            --border-color:rgb(184, 185, 185);
+             --gradient-primary: linear-gradient(135deg, #ff0000 0%,  #1A0B3D 100%);
+            --gradient-secondary:  linear-gradient(135deg, #00F5FF 0%, #0099CC 50%, #1A0B3D 100%);
+            --shadow-light: 0 4px 20px rgba(108, 92, 231, 0.1);
+            --shadow-hover: 0 8px 40px rgba(108, 92, 231, 0.2);
+        }
+
+        [data-theme="dark"] {
+           --bg-primary: #0A0A0F; /* Deeper black */
+    --bg-secondary: #111118; /* Rich dark */
+    --text-primary: #FFFFFF; /* Pure white text */
+    --text-secondary: #A0A0B8; /* Cooler secondary text */
+    --card-bg: #0F1419; /* Darker cards */
+    --border-color: #2A2A3E; /* Darker borders */
+    --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Global styles - Taken from your index.php */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar Styling - Taken from your index.php */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-primary);
+            border-radius: 4px;
+        }
+
+        /* Navigation - Taken from your index.php */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            padding: 1rem 0;
+        }
+
+        [data-theme="dark"] .navbar {
+            background: rgba(26, 26, 26, 0.95);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.8rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            color: var(--text-primary) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: var(--gradient-primary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Theme Toggle Button - Taken from your index.php */
+        .theme-toggle {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-light);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Hero Section for Game Details */
+        .game-details-hero {
+            background: var(--gradient-primary);
+            padding: 8rem 0 5rem;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+
+        .game-details-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('image/bg.png')  ;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .game-details-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .game-details-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-details-hero p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Section Styling */
+        .section-padding {
+            padding: 5rem 0;
+            background-color: var(--bg-secondary);
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        /* Game Details Content */
+        .game-image-main {
+            width: 100%;
+            height: 400px; /* Increased height for better visual */
+            background: var(--gradient-secondary); /* Placeholder gradient */
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: var(--shadow-hover);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .game-image-main::before {
+            content: '🎮'; /* Gamepad icon as placeholder */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8rem; /* Larger icon */
+            opacity: 0.2;
+            color: white;
+            z-index: 1;
+        }
+
+        .game-image-main:hover {
+            transform: scale(1.02);
+        }
+
+        .game-info-details {
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-light);
+            height: 100%;
+        }
+
+        .game-info-details h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .game-meta p {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .game-meta .badge {
+            font-size: 0.9rem;
+            padding: 0.6em 1em;
+            border-radius: 50px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-top: 1.5rem;
+        }
+
+        .stars {
+            color: #ffd700;
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .btn-download-details {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-light);
+            margin-top: 2rem;
+            display: inline-block;
+        }
+
+        .btn-download-details:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+            color: #ffffff;
+            background-color: var(--gradient-secondary);
+        }
+
+        /* Screenshots/Gallery Section */
+        .screenshot-item {
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-light);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            height: 200px; /* Fixed height for consistency */
+            position: relative;
+            background: var(--bg-secondary); /* Placeholder background */
+        }
+        .screenshot-item::before {
+            content: '🖼️'; /* Image icon as placeholder */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            opacity: 0.3;
+        }
+
+        .screenshot-item:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+        .screenshot-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Game Requirements Section */
+        .requirements-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .requirements-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .requirements-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .requirements-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .requirements-list li {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .requirements-list li i {
+            color: var(--primary-color);
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            width: 25px; /* Fixed width for icons */
+            text-align: center;
+        }
+        
+        /* Related Games Section (reusing game card styles) */
+        .game-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            height: 100%;
+            position: relative;
+            box-shadow: var(--shadow-light);
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 180px; /* Slightly smaller for related games */
+            background: var(--gradient-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-image::before {
+            content: '🎮';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            opacity: 0.3;
+        }
+
+        .game-info {
+            padding: 1.5rem;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-category {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .game-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .btn-download { /* Reusing existing button class */
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-light);
+            background-color: var(--gradient-secondary);
+        }
+
+        /* Footer - Taken from your index.php */
+        .footer {
+            background: var(--bg-secondary);
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .footer .social-links a { /* Specificity for footer social links */
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer .social-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-light);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 991px) { /* Adjust breakpoint for larger image column */
+            .game-details-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .game-details-hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .game-image-main {
+                height: 300px; /* Adjust height for smaller screens */
+                margin-bottom: 2rem; /* Add spacing below image on smaller screens */
+            }
+
+            .game-info-details h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .screenshot-item {
+                height: 150px;
+            }
+            .requirements-card {
+                margin-bottom: 2rem;
+            }
+        }
+
+        /* Scroll Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom CSS animations and transitions (from index.php) */
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation - As per your index.php -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><i class="fas fa-gamepad me-2"></i>GameVault</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#games">Games</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#categories">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="get-software.html">Software</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contac.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn-donate" onclick="showNotification('Thank you for considering a donation!', 'info')">
+                            <i class="fas fa-heart me-2"></i><a href="donate.html">Donate</a>
+                        </button>
+                        <button class="theme-toggle ms-3" onclick="toggleTheme()">
+                            <i class="fas fa-moon" id="theme-icon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Game Details Hero Section -->
+    <section class="game-details-hero">
+        <div class="game-details-hero-content" data-aos="fade-up">
+            <h1 id="gameDetailTitle"></h1>
+            <p id="gameDetailSubtitle"></p>
+        </div>
+    </section>
+
+    <!-- Main Game Details Section -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+                    <div id="gameDetailImage" class="game-image-main">
+                        <!-- Placeholder if no image is loaded -->
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+                    <div class="game-info-details">
+                        <h2 id="gameDetailsHeading"></h2>
+                        <div class="game-meta">
+                            <p><strong>Category:</strong> <span id="gameDetailCategory" class="badge" style="background: var(--gradient-primary);"></span></p>
+                            <p><strong>Rating:</strong> 
+                                <span id="gameDetailRatingStars" class="stars"></span> 
+                                <span id="gameDetailRatingText" class="text-muted"></span>
+                            </p>
+                            <p><strong>Downloads:</strong> <span id="gameDetailDownloads" class="text-primary fw-bold"></span></p>
+                            <p><strong>Size:</strong> <span id="gameDetailSize" class="text-primary fw-bold"></span></p>
+                        </div>
+                        <p id="gameDetailDescription" class="game-description"></p>
+                        <button class="btn btn-download-details" id="downloadGameBtn">
+                            <i class="fas fa-download me-2"></i>Download Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots/Gallery Section -->
+    <section class="section-padding " style="background: var(--bg-primary);">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">Screenshots & Gallery</h2>
+                <p class="section-subtitle">A visual tour of the game.</p>
+            </div>
+            <div class="row g-4" id="screenshotsGrid">
+                <!-- Screenshots will be populated by JavaScript -->
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="screenshot-item"></div>
+                </div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="screenshot-item"></div>
+                </div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="screenshot-item"></div>
+                </div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="screenshot-item"></div>
+                </div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="screenshot-item"></div>
+                </div>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="screenshot-item"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Requirements Section -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">System Requirements</h2>
+                <p class="section-subtitle">Ensure your system is ready for the ultimate gaming experience.</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="fade-up" data-aos-delay="100">
+                    <div class="requirements-card">
+                        <h3>Minimum Requirements</h3>
+                        <ul class="requirements-list" id="minRequirementsList">
+                            <!-- Minimum Requirements will be populated by JavaScript -->
+                        </ul>
+                        <h3 class="mt-4">Recommended Requirements</h3>
+                        <ul class="requirements-list" id="recRequirementsList">
+                            <!-- Recommended Requirements will be populated by JavaScript -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Games Section -->
+    <section class="section-padding " style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">You Might Also Like</h2>
+                <p class="section-subtitle">More games for your enjoyment.</p>
+            </div>
+            <div class="row g-4" id="relatedGamesGrid">
+                <!-- Related games will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer - As per your index.php -->
+     <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h3 class="footer-title">
+                        <i class="fas fa-gamepad me-2" style="color:#ff0000;"></i>
+                        GameVault
+                    </h3>
+                    <p class="">Your ultimate destination for premium game downloads. Safe, fast, and reliable.</p>
+                    <div class="social-links mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <a href="index.html#home" class="footer-link">Home</a>
+                    <a href="index.html#games" class="footer-link">Games</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="blog.html" class="footer-link">Blog</a>
+                    <a href="download-guide.html" class="footer-link">Download Guide</a>
+                    <a href="donate.html" class="footer-link">Donate</a>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Categories</h5>
+                    <a href="index.html#categories" class="footer-link">Action</a>
+                    <a href="index.html#categories" class="footer-link">Puzzle</a>
+                    <a href="index.html#categories" class="footer-link">Adventure</a>
+                    <a href="index.html#categories" class="footer-link">Racing</a>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Support</h5>
+                    <a href="help-center.html" class="footer-link">Help Center</a>
+                    <a href="download-guide.html" class="footer-link">Download Guide</a>
+                    <a href="system-requirements.html" class="footer-link">System Requirements</a>
+                    <a href="report-issue.html" class="footer-link">Report Issue</a>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Legal</h5>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">DMCA</a>
+                    <a href="#" class="footer-link">Refund Policy</a>
+                </div>
+            </div>
+            
+            <hr style="border-color: var(--border-color); margin: 2rem 0;">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 ">&copy; 2025 GameVault. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0 ">Made with <i class="fas fa-gamepad" style="color: #ff0000;"></i> Shehan chamika</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <script>
+        let currentTheme = 'light'; // Taken from your index.php
+
+        // Sample Games Data (Should ideally be fetched from a backend/API)
+        // This is duplicated from index.php for client-side demo purposes.
+        const games = [
+            {
+                id: 1,
+                title: "Cyberpunk 2077",
+                category: "action",
+                rating: 4.8,
+                downloads: 15420,
+                size: "4.1MB",
+                downloadLink: "https://drive.google.com/uc?export=download&id=1YUBP6_CCWhG8zneIOih8r9Ufqgc6uGqy",
+                description: "Cyberpunk 2077 is an open-world, action-adventure RPG set in the dark future of Night City — a dangerous megalopolis obsessed with power, glamor, and ceaseless body modification.",
+                screenshots: [
+                    "https://www.nvidia.com/content/dam/en-zz/Solutions/geforce/news/cyberpunk-2077-system-requirements/cyberpunk-2077-recommended-system-specs-ogimage.jpg",
+                    "https://images.gog-statics.com/1c660db41f82ea22de02cf718057121050103306dca9b1bb48aaf0fe0c355eee_product_card_v2_mobile_slider_639.jpg",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRS2VFdNa1az5J7vBmusreapEZgBYv_wxczg&s",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-RAfrD-YM3yHtc516rfeODTsWwCNsJvb8FA&s"
+                ],
+                
+                requirements: {
+                    min: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "Intel Core i7-6700 or AMD Ryzen 5 1600",
+                        memory: "12 GB RAM",
+                        graphics: "NVIDIA GeForce GTX 1060 6GB, AMD Radeon RX 580 8GB, or Intel Arc A380",
+                        storage: "70 GB available space (SSD recommended)"
+                    },
+                    recommended: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "Intel Core i7-12700 or AMD Ryzen 7 7800X3D",
+                        memory: "16 GB RAM",
+                        graphics: "NVIDIA GeForce RTX 2060 Super, AMD Radeon RX 5700 XT, or Intel Arc A770",
+                        storage: "70 GB available space (SSD)"
+                    }
+                }
+            },
+            {
+                id: 2,
+                title: "Assassin’s Creed Shadows",
+                category: "action",
+                rating: 4.6,
+                downloads: 12350,
+                size: "3.6MB",
+                downloadLink: "https://drive.google.com/uc?export=download&id=1K0cXZFtRtP5BHG16zww-AR__onqm6k-_",
+                description: "Experience an epic action-adventure story set in feudal Japan! Become a lethal shinobi assassin and powerful legendary samurai as you explore a beautiful open world in a time of chaos.",
+                screenshots: [
+                    "https://staticctf.ubisoft.com/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/1RLdppgLllgGZlkjuvHBu6/237f7e968827f4abda462a311a0f1faf/RED_KEYART_STD_RGB_WW.jpg",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8gX3BE72M-oR5n8zPUf-PfUhKW5of8sPEdw&s",
+                    "https://i.guim.co.uk/img/media/1d9fcb503ab51a6dd8651e2fdd506196fa668b07/1280_426_2560_1536/master/2560.jpg?width=1200&quality=85&auto=format&fit=max&s=de937adcce38b75c2a69696b48ada752",
+                    "https://cms-assets.xboxservices.com/assets/0e/f8/0ef8875b-b208-4e1d-af49-581c6fa7cab8.jpg?n=343859994_Feature-Image-Priority-Full-Width-0_1_1248x702.jpg"
+                ],
+                requirements: {
+                    min: {
+                        os: " Windows 10/11 (64-bit)",
+                        processor: "Intel Core i7-8700K / AMD Ryzen 5 3600",
+                        memory: "16 GB RAM",
+                        graphics: "Nvidia GeForce GTX 1070 8GB / AMD Radeon RX 5700 8GB / Intel Arc A580 8GB (REBAR ON)",
+                        storage: "115 GB available space"
+                    },
+                    recommended: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "AMD Ryzen 7 5800X3D @ 3.4 GHz, Intel Core i7-12700K @ 3.6 GHz, or better",
+                        memory: " 16 GB (running dual-channel mode)",
+                        graphics: "AMD Radeon RX 7900 XT (20 GB), NVIDIA GeForce RTX 4070 Ti Super (16 GB), or better ",
+                        storage: "120 GB available space"
+                    }
+                }
+            },
+            {
+                id: 3,
+                title: "Grand Theft Auto V Enhanced",
+                category: "action",
+                rating: 4.4,
+                downloads: 8970,
+                size: "3.0MB",
+                downloadLink: "https://drive.google.com/uc?export=download&id=1063cLpKW-9h8eWxWhadq896_c0QMFb_-",
+                description: "Experience entertainment blockbusters Grand Theft Auto V and Grand Theft Auto Online — now upgraded for a new generation with stunning visuals, faster loading, 3D audio, and more, plus exclusive content for GTA Online players.",
+                screenshots: [
+                    "https://cdn.images.express.co.uk/img/dynamic/143/590x/2022020_1.jpg",
+                    "https://preview.redd.it/im-gonna-miss-the-gta-5-era-v0-j48z144zfzsb1.jpg?width=1080&crop=smart&auto=webp&s=fbc1aee7034bfff61250a444284a032f2c648ed3"
+                ],
+                requirements: {
+                    min: {
+                        os: "Windows 10 (latest update)",
+                        processor: "AMD FX-9590 or Intel Core i7-4770",
+                        memory: "8 GB RAM",
+                        graphics: "NVIDIA GeForce GTX 1630 (4 GB VRAM) or AMD Radeon RX 6400 (4 GB VRAM)",
+                        storage: " 105 GB (SSD required)"
+                    },
+                    recommended: {
+                        os: "Windows 11",
+                        processor: "Intel Core i5-9600K or AMD Ryzen 5 3600",
+                        memory: "16 GB RAM (Dual-Channel Configuration)",
+                        graphics: "NVIDIA GeForce RTX 3060 (8 GB VRAM) or AMD Radeon RX 6600 XT (8 GB VRAM)",
+                        storage: " 105 GB (DirectStorage-compatible SSD)"
+                    }
+                }
+            },
+            {
+                id: 4,
+                title: "Assassin’s Creed Valhalla",
+                category: "action",
+                rating: 4.7,
+                downloads: 18650,
+                size: "5.4MB",
+                downloadLink: "https://drive.google.com/uc?export=download&id=1_Jv2q3BHJo1KcSOBvBC37DJZi0nE6lyU",
+                description: "Assassin’s Creed Valhalla is an action-adventure game in which you are a Viking warrior raised on tales of battle and glory. Explore a dynamic open world set in England’s Dark Ages. Raid your enemies and grow your settlement to earn your place among the gods in Valhalla.",
+                screenshots: [
+                    "https://gaming-cdn.com/images/products/6147/orig/assassin-s-creed-valhalla-pc-game-ubisoft-connect-europe-cover.jpg?v=1709130520",
+                    "https://www.yourdecoration.co.uk/cdn/shop/files/gbeye-fp4952-assassins-creed-valhalla-vista-poster-91-6x61cm_c4f94440-9b0d-45c2-a210-667f13db558d.jpg?v=1721811203",
+                    "https://sm.pcmag.com/t/pcmag_me/photo/default/2020-11-19-5_ykea.1920.png"
+                ],
+                requirements: {
+                    min: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "AMD Ryzen 3 1200 @ 3.1 GHz or Intel Core i5-4460 @ 3.2 GHz",
+                        memory: "8 GB RAM",
+                        graphics: "AMD R9 380 (4GB) or NVIDIA GeForce GTX 960 (4GB)",
+                        storage: "160 GB available space"
+                    },
+                    recommended: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "AMD Ryzen 5 1600 @ 3.2 GHz or Intel Core i7-4790 @ 3.6 GHz",
+                        memory: "16 GB RAM",
+                        graphics: "AMD RX 570 (8GB) or NVIDIA GeForce GTX 1060 (6GB)",
+                        storage: "160 GB available space (SSD)"
+                    }
+                }
+            },
+            {
+                id: 5,
+                title: "Forza Horizon 5",
+                category: "racing",
+                rating: 4.5,
+                downloads: 11200,
+                size: "10MB",
+                downloadLink: "https://drive.google.com/uc?export=download&id=1Tc7kFrQi5KoSR8cDLJmmwbbF4OS_3i-x",
+                description: "Explore the vibrant open world landscapes of Mexico with limitless, fun driving action in the world’s greatest cars.",
+                screenshots: [
+                    "https://www.sumo-digital.com/wp-content/uploads/2021/11/forza-horizon-5-featured.jpg",
+                    "https://cdn.mos.cms.futurecdn.net/v2/t:0,l:0,cw:2048,ch:1152,q:80,w:2048/3VaEJGX3N9LLaeomc5pZhT.jpg"
+                ],
+                requirements: {
+                    min: {
+                        os: "Windows 10 (64-bit)",
+                        processor: " Intel i5-4460 or AMD Ryzen 3 1200",
+                        memory: "8 GB RAM",
+                        graphics: "NVidia GTX 970 OR AMD RX 470",
+                        storage: "110 GB available space"
+                    },
+                    recommended: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "Intel i5-8400 or AMD Ryzen 5 1500X",
+                        memory: "16 GB RAM",
+                        graphics: " NVidia GTX 1070 OR AMD RX 590",
+                        storage: "110 GB available space (SSD)"
+                    }
+                }
+            },
+            {
+                id: 6,
+                title: "Call of Duty®: Black Ops III",
+                category: "action",
+                rating: 4.9,
+                downloads: 22100,
+                size: "19.5MB",
+                downloadLink: "https://drive.google.com/uc?export=download&id=1qxLfB3KCZIzLI0KTknhtS6GcDYy-_eJX",
+                description: "Call of Duty®: Black Ops III Zombies Chronicles Edition includes the full base game plus the Zombies Chronicles content expansion.",
+                screenshots: [
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd-TEZ6s-lRjW0jAoL8iVKfVBye3Mo6ty-YQ&s",
+                    "https://i.pcmag.com/imagery/reviews/01Tqq1o9eG5pNP3H92MyPtW-9..v1569474548.jpg",
+                    "https://i.ytimg.com/vi/vIg5dAeudvQ/maxresdefault.jpg"
+                ],
+                requirements: {
+                    min: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "Intel Core i3-530",
+                        memory: "6 GB RAM",
+                        graphics: "AMD Radeon HD 6970",
+                        storage: "100 GB available space"
+                    },
+                    recommended: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "Intel Core i7-6700K or AMD Ryzen 7 1700",
+                        memory: "16 GB RAM",
+                        graphics: "NVIDIA GeForce GTX 1080 or AMD Radeon RX Vega 64",
+                        storage: "100 GB available space (SSD)"
+                    }
+                }
+            },
+            {
+                id: 7,
+                title: "Battlefield™ V",
+                category: "action",
+                rating: 4.3,
+                downloads: 6450,
+                size: "6.1MB",
+                 downloadLink: "https://drive.google.com/uc?export=download&id=1vERD3QXtbEBlApC9C92jwXvdqItOSYfS",
+                description: "This is the ultimate Battlefield V experience. Enter mankind’s greatest conflict with the complete arsenal of weapons, vehicles, and gadgets plus the best customization content of Year 1 and 2.",
+                screenshots: [
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrrPHZ_okdEhFPJIoYgb4valRd_kbGHc86Qg&s",
+                    "https://gaming-cdn.com/images/products/9336/screenshot/battlefield-5-definitive-edition-definitive-edition-pc-game-ea-app-wallpaper-1.jpg?v=1745508737"
+                ],
+                requirements: {
+                    min: {
+                        os: "Windows 10/11",
+                        processor: "AMD FX-8350 or Intel Core i5 6600K",
+                        memory: "8 GB RAM",
+                        graphics: "NVIDIA GeForce GTX 1050/660 2GB or AMD Radeon RX 560/HD 7850 2GB",
+                        storage: "50 GB available space"
+                    },
+                    recommended: {
+                        os: "Windows 10/11",
+                        processor: "AMD Ryzen 7 2700 or Intel Core i7 8700",
+                        memory: "12 GB RAM",
+                        graphics: "NVIDIA GeForce GTX 1060 6GB or AMD Radeon RX 580 8GB",
+                        storage: "50 GBavailable space"
+                    }
+                }
+            },
+            {
+                id: 8,
+                title: "Ghost of Tsushima ",
+                category: "action",
+                rating: 4.6,
+                downloads: 14300,
+                size: "2.2MB",
+                downloadLink: "https://drive.google.com/uc?export=download&id=1R5ESu4Za1GvPZkpMzVChL-ktBja-49Up",
+                description: "A storm is coming. Venture into the complete Ghost of Tsushima DIRECTOR’S CUT on PC; forge your own path through this open-world action adventure and uncover its hidden wonders. Brought to you by Sucker Punch Productions, Nixxes Software and PlayStation Studios.",
+                screenshots: [
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzapcOAzmiasGyIKbUAD_Ffpf9BQviJ5lUFA&s",
+                    "https://gaming-cdn.com/images/news/articles/5203/cover/ghost-of-tsushima-director-s-cut-is-coming-to-pc-on-may-16-cover65e895f089061.jpg"
+                ],
+                requirements: {
+                    min: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "Intel Core i3-7100 or Ryzen 3 1200",
+                        memory: "8 GB RAM",
+                        graphics: "NVIDIA GeForce GTX 960 or Radeon RX 5500 XT",
+                        storage: "75 GB available space"
+                    },
+                    recommended: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "Intel Core i5-8600 or Ryzen 5 3600",
+                        memory: "16 GB RAM",
+                        graphics: "NVIDIA GeForce RTX 2060 or Radeon RX 5600 XT",
+                        storage: "75 GB available space (SSD)"
+                    }
+                }
+            },
+            {
+                id: 9,
+                title: "Counter‑Strike 2",
+                category: "action",
+                rating: 4.6,
+                downloads: 14300,
+                size: "1.351KB",
+                downloadLink: "https://drive.google.com/uc?export=download&id=1MkJiF-5AqVl0qNfZI4Iu07OB-4xeRAfZ",
+                description: "For over two decades, Counter-Strike has offered an elite competitive experience, one shaped by millions of players from across the globe. And now the next chapter in the CS story is about to begin. This is Counter-Strike 2.",
+                screenshots: [
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcooanR2yM5r6AqqwhY9mp6U7t54E_phKCDA&s",
+                    "https://i.pcmag.com/imagery/articles/049zi8OCKMGMf1zQYUoDBII-4..v1679505245.jpg"
+                ],
+                requirements: {
+                    min: {
+                        os: "Windows 10 (64-bit)",
+                        processor: " 4 hardware CPU threads - Intel® Core™ i5 750 or higher",
+                        memory: "8 GB RAM",
+                        graphics: " Video card must be 1 GB or more and should be a DirectX 11-compatible with support for Shader Model 5.0",
+                        storage: "85 GB available space"
+                    },
+                    recommended: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "Intel Core i5-8600 or Ryzen 5 3600",
+                        memory: "16 GB RAM",
+                        graphics: "NVIDIA GeForce RTX 2060 or Radeon RX 5600 XT",
+                        storage: "85 GB available space (SSD)"
+                    }
+                }
+            },
+            {
+                id: 10,
+                title: "Red Dead Redemption II",
+                category: "action",
+                rating: 4.6,
+                downloads: 14300,
+                size: "3.9MB",
+                downloadLink: "https://drive.google.com/uc?export=download&id=1jbX5VGLe984f0_LBpD0j37QbtYawroU1",
+                description: "Winner of over 175 Game of the Year Awards and recipient of over 250 perfect scores, RDR2 is the epic tale of outlaw Arthur Morgan and the infamous Van der Linde gang, on the run across America at the dawn of the modern age. Also includes access to the shared living world of Red Dead Online.",
+                screenshots: [
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeMmKiD9ge2VTy2CTf2VV05zq9dnrw-NQMdQ&s",
+                    "https://image.api.playstation.com/cdn/UP1004/CUSA03041_00/FREE_CONTENTPkRWha1p8XekBjvSs2jd/PREVIEW_SCREENSHOT3_166081.jpg"
+                ],
+                requirements: {
+                    min: {
+                        os: "Windows 10 (64-bit)",
+                        processor: " Intel Core i5 2500K AMD FX 6300",
+                        memory: "8 GB RAM",
+                        graphics: " Nvidia GeForce GTX 770 AMD Radeon R9 280",
+                        storage: "150 GB available space"
+                    },
+                    recommended: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "Intel Core i7 4770 AMD Ryzen 5 1500X",
+                        memory: "16 GB RAM",
+                        graphics: "Nvidia GeForce GTX 1060 AMD Radeon RX 480",
+                        storage: "150 GB available space (SSD)"
+                    }
+                }
+            },
+            {
+                id: 11,
+                title: "God of War",
+                category: "action",
+                rating: 4.6,
+                downloads: 14300,
+                size: "12.6MB",
+                downloadLink: "https://drive.google.com/uc?export=download&id=1qnFkD-YUpypoi8zdZDuNfr0Q9iBixcg3",
+                description: "His vengeance against the Gods of Olympus years behind him, Kratos now lives as a man in the realm of Norse Gods and monsters. It is in this harsh, unforgiving world that he must fight to survive… and teach his son to do the same",
+                screenshots: [
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWN1Y_SxQ6-BZnbTR6zotsOHebxeO5ofL9fw&s",
+                    "https://images.pushsquare.com/c73d4bd168d43/best-god-of-war-games-1.900x.jpg"
+                ],
+                requirements: {
+                    min: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "Intel i5-2500k (4 core 3.3 GHz) or AMD Ryzen 3 1200 (4 core 3.1 GHz)",
+                        memory: "8 GB RAM",
+                        graphics: "NVIDIA GTX 960 (4 GB) or AMD R9 290X (4 GB)",
+                        storage: "70 GB available space"
+                    },
+                    recommended: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "Intel i5-6600k (4 core 3.5 GHz) or AMD Ryzen 5 2400 G (4 core 3.6 GHz)",
+                        memory: "12 GB RAM",
+                        graphics: " NVIDIA GTX 1060 (6 GB) or AMD RX 570 (4 GB)",
+                        storage: "70 GB available space (SSD)"
+                    }
+                }
+            },
+            {
+                id: 12,
+                title: "God of War Ragnarök",
+                category: "action",
+                rating: 4.6,
+                downloads: 14300,
+                size: "6.6MB",
+                downloadLink: "https://drive.google.com/uc?export=download&id=1_jYceQfYqWylwte3U9ICcbgIWMaMRoPD",
+                description: "Kratos and Atreus embark on a mythic journey for answers before Ragnarök arrives – now on PC.",
+                screenshots: [
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-sFQyKNESTiCrXXWRaNExifj-B7y4vDXrhA&s",
+                    "https://platform.polygon.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/24235094/god_of_war_ragnarok_wishing_well_featured_1.jpg?quality=90&strip=all&crop=7.8125,0,84.375,100"
+                ],
+                requirements: {
+                    min: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "Intel i5-2500k (4 core 3.3 GHz) or AMD Ryzen 3 1200 (4 core 3.1 GHz)",
+                        memory: "8 GB RAM",
+                        graphics: "NVIDIA GTX 960 (4 GB) or AMD R9 290X (4 GB)",
+                        storage: "70 GB available space"
+                    },
+                    recommended: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "Intel i5-6600k (4 core 3.5 GHz) or AMD Ryzen 5 2400 G (4 core 3.6 GHz)",
+                        memory: "12 GB RAM",
+                        graphics: " NVIDIA GTX 1060 (6 GB) or AMD RX 570 (4 GB)",
+                        storage: "70 GB available space (SSD)"
+                    }
+                }
+            },
+            {
+                id: 13,
+                title: "Black Myth: Wukong",
+                category: "action",
+                rating: 4.6,
+                downloads: 14300,
+                size: "4.6MB",
+                downloadLink: "https://drive.google.com/uc?export=download&id=1pEcxAII9bR6v14aG-IDesX4AOCA2y6dO",
+                description: "Black Myth: Wukong is an action RPG rooted in Chinese mythology. You shall set out as the Destined One to venture into the challenges and marvels ahead, to uncover the obscured truth beneath the veil of a glorious legend from the past.",
+                screenshots: [
+                    "https://assets-prd.ignimgs.com/2024/08/18/blackmyth-1723969364570.jpg",
+                    "https://www.stealthgaming.net/wp-content/uploads/2024/08/black-myth-wukong-monumental-action.jpg.webp"
+                ],
+                requirements: {
+                    min: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "Intel Core i5-8400 / AMD Ryzen 5 1600",
+                        memory: "18 GB RAM",
+                        graphics: "NVIDIA GeForce GTX 1060 6GB / AMD Radeon RX 580 8GB",
+                        storage: "130 GB available space"
+                    },
+                    recommended: {
+                        os: "Windows 10 (64-bit)",
+                        processor: "Intel Core i7-9700 / AMD Ryzen 5 5500",
+                        memory: "16 GB RAM",
+                        graphics: "NVIDIA GeForce RTX 2060 / AMD Radeon RX 5700 XT / Intel Arc A750",
+                        storage: "130 GB available space (SSD)"
+                    }
+                }
+            }
+        ];
+
+
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Theme Toggle Function - Taken from your index.php
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (currentTheme === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fas fa-sun';
+                currentTheme = 'dark';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.removeAttribute('data-theme');
+                themeIcon.className = 'fas fa-moon';
+                currentTheme = 'light';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Load saved theme - Taken from your index.php
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').className = 'fas fa-sun';
+                currentTheme = 'dark';
+            }
+        }
+
+        // Intersection Observer for scroll animations - Taken from your index.php
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        // Smooth scrolling for navigation links - Taken from your index.php
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll-based navbar styling - Taken from your index.php
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = currentTheme === 'dark' 
+                    ? 'rgba(26, 26, 26, 0.98)' 
+                    : 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = 'var(--shadow-light)';
+            } else {
+                navbar.style.background = currentTheme === 'dark' 
+                    ? 'rgba(26, 26, 26, 0.95)' 
+                    : 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Generate Star Rating - Taken from your index.php
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            let stars = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            
+            return stars;
+        }
+
+        // Function to render game details
+        function renderGameDetails(game) {
+            if (!game) {
+                document.getElementById('gameDetailTitle').textContent = "Game Not Found";
+                document.getElementById('gameDetailSubtitle').textContent = "The game you are looking for does not exist.";
+                document.getElementById('gameDetailsHeading').textContent = "Game Not Found";
+                document.getElementById('gameDetailImage').style.background = 'grey';
+                document.getElementById('gameDetailDescription').textContent = "Please return to the home page to browse available games.";
+                document.getElementById('downloadGameBtn').style.display = 'none'; // Hide download button
+                document.getElementById('gameDetailCategory').textContent = 'N/A';
+                document.getElementById('gameDetailRatingStars').innerHTML = generateStars(0);
+                document.getElementById('gameDetailRatingText').textContent = '0/5';
+                document.getElementById('gameDetailDownloads').textContent = 'N/A';
+                document.getElementById('gameDetailSize').textContent = 'N/A';
+                document.getElementById('screenshotsGrid').innerHTML = '<div class="col-12 text-center text-muted">No screenshots available.</div>';
+                document.getElementById('minRequirementsList').innerHTML = '<li class="text-muted">No minimum requirements listed.</li>';
+                document.getElementById('recRequirementsList').innerHTML = '<li class="text-muted">No recommended requirements listed.</li>';
+                document.getElementById('relatedGamesGrid').innerHTML = '<div class="col-12 text-center text-muted">No related games available.</div>';
+                return;
+            }
+
+            document.getElementById('gameDetailTitle').textContent = game.title;
+            document.getElementById('gameDetailSubtitle').textContent = `Explore ${game.title} - ${game.category} game.`;
+            document.getElementById('gameDetailsHeading').textContent = game.title;
+            
+            // Placeholder for main image, replace if actual images are available
+            document.getElementById('gameDetailImage').style.background = `url(${game.screenshots && game.screenshots.length > 0 ? game.screenshots[0] : 'https://placehold.co/800x450/6c5ce7/ffffff?text=' + encodeURIComponent(game.title.replace(/\s/g, '+'))}) center center / cover`;
+            
+            document.getElementById('gameDetailCategory').textContent = game.category.charAt(0).toUpperCase() + game.category.slice(1);
+            document.getElementById('gameDetailRatingStars').innerHTML = generateStars(game.rating);
+            document.getElementById('gameDetailRatingText').textContent = `${game.rating}/5`;
+            document.getElementById('gameDetailDownloads').textContent = game.downloads.toLocaleString();
+            document.getElementById('gameDetailSize').textContent = game.size;
+            document.getElementById('gameDetailDescription').textContent = game.description;
+           
+            // Handle Screenshots
+            const screenshotsGrid = document.getElementById('screenshotsGrid');
+            screenshotsGrid.innerHTML = ''; // Clear existing placeholders
+            if (game.screenshots && game.screenshots.length > 0) {
+                game.screenshots.forEach((src, index) => {
+                    screenshotsGrid.innerHTML += `
+                        <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="${index * 100}">
+                            <div class="screenshot-item">
+                                <img src="${src}" alt="Screenshot of ${game.title} ${index + 1}" onerror="this.onerror=null;this.src='https://placehold.co/800x450/6c5ce7/ffffff?text=Screenshot';">
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                screenshotsGrid.innerHTML = '<div class="col-12 text-center text-muted">No screenshots available for this game.</div>';
+            }
+
+            // Handle System Requirements
+            const minRequirementsList = document.getElementById('minRequirementsList');
+            const recRequirementsList = document.getElementById('recRequirementsList');
+            minRequirementsList.innerHTML = '';
+            recRequirementsList.innerHTML = '';
+
+            if (game.requirements) {
+                if (game.requirements.min) {
+                    minRequirementsList.innerHTML += `<li><i class="fas fa-desktop"></i> OS: ${game.requirements.min.os}</li>`;
+                    minRequirementsList.innerHTML += `<li><i class="fas fa-microchip"></i> Processor: ${game.requirements.min.processor}</li>`;
+                    minRequirementsList.innerHTML += `<li><i class="fas fa-memory"></i> Memory: ${game.requirements.min.memory}</li>`;
+                    minRequirementsList.innerHTML += `<li><i class="fas fa-video"></i> Graphics: ${game.requirements.min.graphics}</li>`;
+                    minRequirementsList.innerHTML += `<li><i class="fas fa-hdd"></i> Storage: ${game.requirements.min.storage}</li>`;
+                } else {
+                    minRequirementsList.innerHTML = '<li class="text-muted">No minimum requirements listed.</li>';
+                }
+
+                if (game.requirements.recommended) {
+                    recRequirementsList.innerHTML += `<li><i class="fas fa-desktop"></i> OS: ${game.requirements.recommended.os}</li>`;
+                    recRequirementsList.innerHTML += `<li><i class="fas fa-microchip"></i> Processor: ${game.requirements.recommended.processor}</li>`;
+                    recRequirementsList.innerHTML += `<li><i class="fas fa-memory"></i> Memory: ${game.requirements.recommended.memory}</li>`;
+                    recRequirementsList.innerHTML += `<li><i class="fas fa-video"></i> Graphics: ${game.requirements.recommended.graphics}</li>`;
+                    recRequirementsList.innerHTML += `<li><i class="fas fa-hdd"></i> Storage: ${game.requirements.recommended.storage}</li>`;
+                } else {
+                    recRequirementsList.innerHTML = '<li class="text-muted">No recommended requirements listed.</li>';
+                }
+            } else {
+                minRequirementsList.innerHTML = '<li class="text-muted">No system requirements listed.</li>';
+                recRequirementsList.innerHTML = '<li class="text-muted">No system requirements listed.</li>';
+            }
+
+
+            // Handle Related Games (simple logic: games from the same category, excluding current)
+            const relatedGames = games.filter(g => g.category === game.category && g.id !== game.id).slice(0, 4); // Limit to 4 related games
+            const relatedGamesGrid = document.getElementById('relatedGamesGrid');
+            relatedGamesGrid.innerHTML = '';
+            if (relatedGames.length > 0) {
+                relatedGames.forEach((relatedGame, index) => {
+                    relatedGamesGrid.innerHTML += `
+                        <div class="col-lg-3 col-md-6 game-item" data-aos="fade-up" data-aos-delay="${index * 100}">
+                            <div class="game-card">
+                                <a href="game-details.html?id=${relatedGame.id}" style="text-decoration: none; color: inherit;">
+                                    <div class="game-image position-relative" style="background-image: url('${relatedGame.screenshots && relatedGame.screenshots.length > 0 ? relatedGame.screenshots[0] : 'https://placehold.co/400x180/6c5ce7/ffffff?text=' + encodeURIComponent(relatedGame.title.replace(/\s/g, '+'))}'); background-size: cover; background-position: center;">
+                                        <!-- Using game title for placeholder text on image -->
+                                        <div class="position-absolute top-0 end-0 m-3">
+                                            <span class="badge" style="background: var(--gradient-primary); font-size: 0.8rem;">
+                                                ${relatedGame.size}
+                                            </span>
+                                        </div>
+                                        <div class="position-absolute bottom-0 start-0 m-3">
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-download me-1"></i>${relatedGame.downloads.toLocaleString()}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="game-info">
+                                        <h5 class="game-title">${relatedGame.title}</h5>
+                                        <div class="game-category text-capitalize">
+                                            <i class="fas fa-tag me-2"></i>${relatedGame.category}
+                                        </div>
+                                        <div class="game-rating">
+                                            <div class="stars">
+                                                ${generateStars(relatedGame.rating)}
+                                            </div>
+                                            <span class="text-muted">${relatedGame.rating}/5</span>
+                                        </div>
+                                        <p class=" small mb-3">${relatedGame.description.substring(0, 70)}...</p>
+                                    </div>
+                                </a>
+                                <button class="btn-download mt-auto" onclick="window.location.href='game-details.html?id=${relatedGame.id}'">
+                                    <i class="fas fa-download me-2"></i> View Details
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                relatedGamesGrid.innerHTML = '<div class="col-12 text-center text-muted">No related games found.</div>';
+            }
+
+            // Set up download button action
+            document.getElementById('downloadGameBtn').onclick = function() {
+                showNotification(`Downloading ${game.title}!`, 'success');
+                window.location.href = game.downloadLink || 'downloadLink'; // Fallback to '#' if no download link
+
+            };
+        }
+
+
+        // Notification function (from index.php)
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : 'info'} position-fixed`;
+            notification.style.cssText = `
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                min-width: 300px;
+                box-shadow: var(--shadow-hover);
+                border: none;
+                border-radius: 10px;
+                animation: slideInRight 0.5s ease;
+            `;
+            
+            notification.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'} me-2"></i>
+                    <span>${message}</span>
+                    <button type="button" class="btn-close ms-auto" onclick="this.parentElement.parentElement.remove()"></button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.style.animation = 'slideOutRight 0.5s ease';
+                    setTimeout(() => notification.remove(), 500);
+                }
+            }, 5000);
+        }
+
+        // Easter Egg from index.php
+        let clickCount = 0;
+        document.querySelector('.navbar-brand').addEventListener('click', function(e) {
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 5) {
+                showNotification('🎮 Easter Egg Found! You are a true gamer!', 'success');
+                clickCount = 0;
+                
+                const colors = ['#6c5ce7', '#fd79a8', '#00b894', '#00cec9'];
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.style.cssText = `
+                            position: fixed;
+                            top: -10px;
+                            left: ${Math.random() * 100}%;
+                            width: 10px;
+                            height: 10px;
+                            background: ${colors[Math.floor(Math.random() * colors.length)]};
+                            z-index: 9999;
+                            animation: confettiFall 3s linear forwards;
+                            transform: rotate(${Math.random() * 360}deg);
+                        `;
+                        document.body.appendChild(confetti);
+                        
+                        setTimeout(() => confetti.remove(), 3000);
+                    }, i * 50);
+                }
+                
+                if (!document.getElementById('confetti-style')) {
+                    const confettiStyle = document.createElement('style');
+                    confettiStyle.id = 'confetti-style';
+                    confettiStyle.textContent = `
+                        @keyframes confettiFall {
+                            to {
+                                transform: translateY(100vh) rotate(720deg);
+                                opacity: 0;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(confettiStyle);
+                }
+            }
+        });
+
+        // Initialize page and observe elements
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
+            
+            // Parse game ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const gameId = parseInt(urlParams.get('id'));
+
+            const game = games.find(g => g.id === gameId);
+            renderGameDetails(game);
+
+            // Observe elements for scroll animations
+            document.querySelectorAll('.scroll-reveal, .game-details-hero-content, .game-image-main, .game-info-details, .section-title, .section-subtitle, .screenshot-item, .requirements-card, .game-card').forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+
+
+        const downloadBtn = document.getElementById('downloadGameBtn');
+downloadBtn.style.display = 'inline-block';
+downloadBtn.onclick = () => {
+  window.location.href = game.downloadLink;
+};
+
+    </script>
+</body>
+</html>

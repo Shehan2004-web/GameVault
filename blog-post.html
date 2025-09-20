@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="postTitle">Blog Post - GameVault</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- AOS for Scroll Animations -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="image/Untitled-2.ico" type="image/x-icon">
+    <style>
+        /* CSS Variables - Taken from your index.php */
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #03346E;
+            --accent-color: #00b894;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #2d3436;
+            --text-secondary: #636e72;
+            --card-bg: #ffffff;
+            --border-color:rgb(184, 185, 185);
+             --gradient-primary: linear-gradient(135deg, #ff0000 0%,  #1A0B3D 100%);
+            --gradient-secondary:  linear-gradient(135deg, #00F5FF 0%, #0099CC 50%, #1A0B3D 100%);
+            --shadow-light: 0 4px 20px rgba(108, 92, 231, 0.1);
+            --shadow-hover: 0 8px 40px rgba(108, 92, 231, 0.2);
+        }
+
+        [data-theme="dark"] {
+           --bg-primary: #0A0A0F; /* Deeper black */
+    --bg-secondary: #111118; /* Rich dark */
+    --text-primary: #FFFFFF; /* Pure white text */
+    --text-secondary: #A0A0B8; /* Cooler secondary text */
+    --card-bg: #0F1419; /* Darker cards */
+    --border-color: #2A2A3E; /* Darker borders */
+    --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Global styles - Taken from your index.php */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar Styling - Taken from your index.php */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-primary);
+            border-radius: 4px;
+        }
+
+        /* Navigation - Taken from your index.php */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            padding: 1rem 0;
+        }
+
+        [data-theme="dark"] .navbar {
+            background: rgba(26, 26, 26, 0.95);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.8rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            color: var(--text-primary) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: var(--gradient-primary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Theme Toggle Button - Taken from your index.php */
+        .theme-toggle {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-light);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Hero Section for Blog Post */
+        .blog-post-hero {
+            background: var(--gradient-primary);
+            padding: 8rem 0 5rem;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+
+        .blog-post-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+           background: url('image/bg.png')  ;
+        } 
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .blog-post-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .blog-post-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-post-hero p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Section Styling */
+        .section-padding {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        /* Blog Post Content Area */
+        .blog-post-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+
+        .blog-post-container:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .blog-post-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease;
+        }
+
+        .blog-post-image:hover {
+            transform: scale(1.01);
+        }
+
+        .blog-post-meta {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-post-meta i {
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .blog-post-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-post-content h2, .blog-post-content h3 {
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .back-to-blog-btn {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-light);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .back-to-blog-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Footer - Taken from your index.php */
+        .footer {
+            background: var(--bg-secondary);
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .footer .social-links a { /* Specificity for footer social links */
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer .social-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-light);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .blog-post-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .blog-post-hero p {
+                font-size: 1rem;
+            }
+
+            .blog-post-container {
+                padding: 1.5rem;
+            }
+
+            .blog-post-image {
+                height: 250px;
+            }
+
+            .blog-post-content p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Scroll Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom CSS animations and transitions (from index.php) */
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation - As per your index.php -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><i class="fas fa-gamepad me-2"></i>GameVault</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#games">Games</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#categories">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="get-software.html">Software</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contac.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn-donate" onclick="showNotification('Thank you for considering a donation!', 'info')">
+                            <i class="fas fa-heart me-2"></i><a href="donate.html">Donate</a>
+                        </button>
+                        <button class="theme-toggle ms-3" onclick="toggleTheme()">
+                            <i class="fas fa-moon" id="theme-icon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Post Hero Section -->
+    <section class="blog-post-hero">
+        <div class="blog-post-hero-content" data-aos="fade-up">
+            <h1 id="postHeroTitle"></h1>
+            <p id="postHeroSubtitle"></p>
+        </div>
+    </section>
+
+    <!-- Main Blog Post Content Section -->
+    <section class="section-padding" id="blog-post-content-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="blog-post-container" data-aos="fade-up" data-aos-delay="100">
+                        <img src="" alt="Blog Post Image" class="blog-post-image" id="postImage">
+                        <p class="blog-post-meta">
+                            By <span id="postAuthor"></span> on <span id="postDate"></span>
+                        </p>
+                        <div class="blog-post-content" id="postContent">
+                            <!-- Full content will be loaded here -->
+                        </div>
+                        <a href="blog.html" class="back-to-blog-btn">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Blog
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer - As per your index.php -->
+     <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h3 class="footer-title">
+                        <i class="fas fa-gamepad me-2" style="color:#ff0000;"></i>
+                        GameVault
+                    </h3>
+                    <p class="">Your ultimate destination for premium game downloads. Safe, fast, and reliable.</p>
+                    <div class="social-links mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <a href="index.html#home" class="footer-link">Home</a>
+                    <a href="index.html#games" class="footer-link">Games</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="blog.html" class="footer-link">Blog</a>
+                    <a href="download-guide.html" class="footer-link">Download Guide</a>
+                    <a href="donate.html" class="footer-link">Donate</a>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Categories</h5>
+                    <a href="index.html#categories" class="footer-link">Action</a>
+                    <a href="index.html#categories" class="footer-link">Puzzle</a>
+                    <a href="index.html#categories" class="footer-link">Adventure</a>
+                    <a href="index.html#categories" class="footer-link">Racing</a>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Support</h5>
+                    <a href="help-center.html" class="footer-link">Help Center</a>
+                    <a href="download-guide.html" class="footer-link">Download Guide</a>
+                    <a href="system-requirements.html" class="footer-link">System Requirements</a>
+                    <a href="report-issue.html" class="footer-link">Report Issue</a>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Legal</h5>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">DMCA</a>
+                    <a href="#" class="footer-link">Refund Policy</a>
+                </div>
+            </div>
+            
+            <hr style="border-color: var(--border-color); margin: 2rem 0;">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 ">&copy; 2025 GameVault. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0 ">Made with <i class="fas fa-gamepad" style="color: #ff0000;"></i> Shehan chamika</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <script>
+        let currentTheme = 'light'; // Taken from your index.php
+
+        // Sample Blog Posts Data (Ideally would be fetched from a backend/API)
+        const blogPosts = [
+            {
+                id: 1,
+                title: "The Rise of Indie Games: Why Small Studios are Dominating",
+                author: "Sarah GamingWriter",
+                date: "June 10, 2025",
+                image: "https://media.licdn.com/dms/image/v2/D4D12AQEbnq_UIw4Yfw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1711981398423?e=2147483647&v=beta&t=uM2_ANnoHtgsC0EhvsdMDhtWON4jgnxQO3Ypq7tK3mQ",
+                excerpt: "Indie games are carving out a significant niche in the gaming industry, often pushing boundaries with innovative gameplay and unique storytelling...",
+                fullContent: `
+                    <p>Indie games have been steadily growing in popularity over the past decade, and 2025 is no exception. What started as niche creations by small teams has evolved into a powerhouse segment of the gaming industry, often outshining AAA titles in terms of innovation and player engagement.</p>
+                    <h2>The Allure of Creativity</h2>
+                    <p>One of the primary reasons for this dominance is the creative freedom that indie developers enjoy. Unlike large studios burdened by corporate demands and strict deadlines, indie teams can pursue unique visions and experiment with unconventional mechanics. This often results in games that feel fresh, original, and deeply personal.</p>
+                    <p>For example, titles like *Stardew Valley* and *Hollow Knight* gained immense popularity not because of massive marketing budgets, but due to their compelling gameplay, artistic design, and heartfelt development. Players are increasingly drawn to these authentic experiences.</p>
+                    <h3>Community-Driven Development</h3>
+                    <p>Many indie studios foster strong communities around their games. They often engage directly with players through platforms like Discord, Reddit, and early access programs, taking feedback into account during development. This collaborative approach creates a sense of ownership and loyalty among players, making them active participants in the game's evolution.</p>
+                    <p>This direct interaction also allows for rapid iteration and responsiveness to player needs, something larger studios often struggle with due to their complex structures.</p>
+                    <h2>Accessibility and Innovation</h2>
+                    <p>The rise of digital distribution platforms has made it easier than ever for indie developers to reach a global audience without needing a traditional publisher. This accessibility has lowered the barrier to entry for aspiring game creators, leading to an explosion of diverse and innovative titles.</p>
+                    <p>Furthermore, indie games are often more affordable, making them attractive to a wider range of players. This combination of affordability, accessibility, and fresh ideas continues to fuel the indie gaming phenomenon.</p>
+                    <p>In conclusion, the indie game scene is not just thriving; it's driving significant change within the gaming industry. As long as creativity, community, and innovation remain at its core, small studios will continue to dominate and shape the future of gaming.</p>
+                `
+            },
+            {
+                id: 2,
+                title: "Top 5 Upcoming RPGs You Can't Miss in 2025",
+                author: "RPG Enthusiast",
+                date: "June 05, 2025",
+                image: "https://i.ytimg.com/vi/anx_S5uZBZ0/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLC_yXXNtciUr8xIXx0x3wsmhoQsGg",
+                excerpt: "Get ready for an epic year in role-playing games! We've handpicked the top 5 most anticipated RPGs set to release in 2025 that promise immersive worlds and captivating narratives...",
+                fullContent: `
+                    <p>2025 is shaping up to be a monumental year for role-playing game enthusiasts! From sprawling open worlds to intricate narratives, here are our top 5 picks for upcoming RPGs that you absolutely cannot afford to miss.</p>
+                    <h2>1. Eldoria: Chronicles of the Sunstone</h2>
+                    <p>Set in a vibrant, post-magical apocalypse world, Eldoria promises a rich narrative driven by player choices. With a unique combat system that blends real-time action with tactical pauses, and a vast world teeming with secrets, this game is poised to be a new classic.</p>
+                    <h3>2. Shadowfen: The Whispering Grove</h3>
+                    <p>If you love dark fantasy and complex moral dilemmas, Shadowfen is for you. This isometric RPG boasts a compelling story filled with political intrigue and ancient evils. Its highly customizable character classes and branching dialogues ensure multiple playthroughs.</p>
+                    <h2>3. CyberNet: Tokyo Drift</h2>
+                    <p>Step into a neon-drenched cyberpunk Tokyo in this futuristic RPG. Featuring deep character customization, hackable environments, and intense turn-based combat, CyberNet merges traditional RPG elements with a compelling sci-fi setting.</p>
+                    <h3>4. Starforged Odyssey</h3>
+                    <p>Embark on an interstellar journey in Starforged Odyssey, a space-faring RPG where you explore uncharted galaxies, encounter alien civilizations, and build your own starship. The game emphasizes exploration, resource management, and strategic space combat.</p>
+                    <h2>5. Dragon's Breath: A New Dawn</h2>
+                    <p>The highly anticipated sequel to the beloved Dragon's Breath series, 'A New Dawn' returns with improved graphics, a redesigned magic system, and a world map that's twice the size of its predecessor. Prepare for epic dragon battles and a quest to save the realm from an ancient evil.</p>
+                    <p>Each of these titles brings something unique to the table, promising countless hours of adventure and discovery. Mark your calendars, gamers!</p>
+                `
+            },
+            {
+                id: 3,
+                title: "How to Optimize Your PC for Peak Gaming Performance",
+                author: "TechGuru",
+                date: "May 28, 2025",
+                image: "https://www.avadirect.com/blog/wp-content/uploads/2025/02/optimize-gaming-pc.jpg",
+                excerpt: "Experiencing lag or low FPS? Our comprehensive guide will walk you through the essential steps to fine-tune your gaming rig for maximum performance...",
+                fullContent: `
+                    <p>Is your gaming PC struggling to keep up with the latest titles? Don't despair! Optimizing your system for peak gaming performance can significantly improve your frame rates (FPS), reduce lag, and provide a smoother, more enjoyable experience. Here’s a comprehensive guide to help you fine-tune your rig.</p>
+                    <h2>1. Update Your Graphics Drivers</h2>
+                    <p>This is often the easiest and most impactful step. Graphics card manufacturers (NVIDIA, AMD) regularly release driver updates that include performance optimizations for new games. Always download the latest drivers directly from their official websites.</p>
+                    <h3>How to update:</h3>
+                    <ul>
+                        <li><strong>NVIDIA:</strong> Use GeForce Experience or download from NVIDIA's website.</li>
+                        <li><strong>AMD:</strong> Use Radeon Software or download from AMD's website.</li>
+                    </ul>
+
+                    <h2>2. Adjust In-Game Graphics Settings</h2>
+                    <p>While high settings look great, they can severely impact performance. Experiment with in-game graphics options:</p>
+                    <ul>
+                        <li><strong>Resolution:</strong> Lowering resolution significantly boosts FPS.</li>
+                        <li><strong>Texture Quality:</strong> High textures consume VRAM. Reduce if you have limited VRAM.</li>
+                        <li><strong>Shadows:</strong> Shadows are resource-intensive. Lowering shadow quality can provide a huge performance bump.</li>
+                        <li><strong>Anti-Aliasing:</strong> Smooths jagged edges but can be very demanding. Try lower settings or disable it.</li>
+                        <li><strong>Render Scale:</strong> Reduces the resolution at which the game is rendered internally, then upscales it. Can improve FPS at the cost of visual fidelity.</li>
+                    </ul>
+
+                    <h2>3. Close Background Applications</h2>
+                    <p>Applications running in the background consume CPU, RAM, and GPU resources. Before gaming, close unnecessary browsers, streaming apps, torrent clients, and other programs.</p>
+                    <h3>Tips:</h3>
+                    <ul>
+                        <li>Use Task Manager (Ctrl+Shift+Esc) to identify and close resource-hogging apps.</li>
+                        <li>Disable startup programs you don't need immediately.</li>
+                    </ul>
+
+                    <h2>4. Optimize Windows Settings</h2>
+                    <p>Windows itself can be optimized for gaming:</p>
+                    <ul>
+                        <li><strong>Game Mode:</strong> Enable Windows Game Mode (Settings > Gaming > Game Mode) to prioritize your game's resources.</li>
+                        <li><strong>Power Options:</strong> Set your power plan to "High Performance" (Control Panel > Power Options).</li>
+                        <li><strong>Disable Visual Effects:</strong> Reduce visual clutter (Right-click "This PC" > Properties > Advanced system settings > Performance Settings > Adjust for best performance).</li>
+                    </ul>
+
+                    <h2>5. Ensure Proper Cooling and Cleanliness</h2>
+                    <p>Overheating components (CPU, GPU) will throttle performance to prevent damage. Ensure good airflow in your case and clean dust from fans and heatsinks regularly.</p>
+                    <h3>Maintenance tips:</h3>
+                    <ul>
+                        <li>Use compressed air to clean out dust.</li>
+                        <li>Consider replacing thermal paste on CPU/GPU if temperatures are consistently high.</li>
+                    </ul>
+
+                    <h2>6. Consider Hardware Upgrades (If Necessary)</h2>
+                    <p>If software optimizations aren't enough, your hardware might be the bottleneck. Consider upgrading your:</p>
+                    <ul>
+                        <li><strong>GPU:</strong> The most significant impact on gaming performance.</li>
+                        <li><strong>RAM:</strong> 16GB is ideal for most modern games.</li>
+                        <li><strong>SSD:</strong> Improves game loading times dramatically.</li>
+                    </ul>
+                    <p>By following these steps, you can significantly boost your PC's gaming performance and enjoy your favorite titles with greater fluidity and visual fidelity.</p>
+                `
+            },
+            {
+                id: 4,
+                title: "The Evolution of Gaming Graphics: From Pixels to Ray Tracing",
+                author: "Graphics Geek",
+                date: "May 20, 2025",
+                image: "https://i.ytimg.com/vi/gXJJ9SYvV48/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAl0xsl8t96TjbFuezrKQOLKk7JLg",
+                excerpt: "Join us on a journey through the stunning evolution of gaming graphics, from the humble beginnings of pixel art to the breathtaking realism of ray tracing...",
+                fullContent: `
+                    <p>The journey of gaming graphics has been nothing short of spectacular. From rudimentary pixel art to the hyper-realistic visuals of today, every leap has transformed the way we experience virtual worlds. Let's take a nostalgic and forward-looking dive into this incredible evolution.</p>
+                    <h2>The Dawn of Pixels (1970s - 1980s)</h2>
+                    <p>In the beginning, games were defined by their pixels. Think of Atari's Pong or Space Invaders – blocky, minimalist, yet revolutionary. Limitations in hardware meant developers had to be incredibly creative with very few pixels to convey character and environment. This era was about imagination filling in the blanks.</p>
+                    <h3>The Era of Sprites and Early 3D (1990s)</h3>
+                    <p>The 90s brought significant advancements. 2D sprites became more detailed with larger color palettes, leading to visually rich games like *Super Mario World* and *Street Fighter II*. Towards the mid-90s, the first polygons began to appear, ushering in rudimentary 3D graphics in games like *Virtua Fighter* and *Doom*. While blocky by today's standards, these were groundbreaking for their time.</p>
+                    <h2>Polygons to Photorealism (2000s - 2010s)</h2>
+                    <p>The turn of the millennium saw rapid acceleration. Dedicated graphics cards became standard, allowing for more complex polygon models, higher-resolution textures, and advanced lighting techniques. Games like *Half-Life 2* and *Crysis* pushed boundaries, often becoming benchmarks for PC performance. Normal mapping, specular mapping, and advanced shaders became common, giving surfaces realistic depth and detail.</p>
+                    <h3>The Arrival of Ray Tracing (Late 2010s - Present)</h3>
+                    <p>The latest frontier is ray tracing. This rendering technique simulates the physical behavior of light, creating incredibly realistic reflections, refractions, and global illumination. Games like *Cyberpunk 2077* and *Control* showcase the stunning visual fidelity possible with ray tracing, bringing a level of realism previously confined to cinematic CGI.</p>
+                    <h2>The Future of Graphics</h2>
+                    <p>What's next? We can expect continued improvements in rendering techniques, more sophisticated AI for dynamic environments, and perhaps a blend of photorealism with stylized aesthetics. Virtual Reality (VR) and Augmented Reality (AR) will also push graphics further, demanding even more immersive and believable worlds.</p>
+                    <p>From simple pixels to complex light simulations, the evolution of gaming graphics is a testament to relentless innovation and the artistic drive to create increasingly believable and captivating virtual experiences.</p>
+                `
+            },
+            {
+                id: 5,
+                title: "Understanding Game Genres: A Beginner's Guide",
+                author: "Game Scholar",
+                date: "May 15, 2025",
+                image: "https://store.hp.com/app/assets/images/uploads/prod/video-game-genres1597871118726439.jpg",
+                excerpt: "Confused by all the different game genres? This guide breaks down the most popular categories, helping you find your next favorite game...",
+                fullContent: `
+                    <p>The world of video games is vast and diverse, with countless titles spanning a multitude of categories. Understanding game genres can help you pinpoint your preferences and discover new games you'll love. Here's a beginner's guide to the most popular game genres.</p>
+                    <h2>1. Action</h2>
+                    <p>Action games are characterized by direct, often fast-paced, physical challenges that require quick reflexes and hand-eye coordination. They frequently involve combat, platforming, or shooting elements.</p>
+                    <h3>Subgenres include:</h3>
+                    <ul>
+                        <li><strong>Shooters (FPS/TPS):</strong> *Call of Duty*, *Halo*</li>
+                        <li><strong>Fighting:</strong> *Street Fighter*, *Mortal Kombat*</li>
+                        <li><strong>Hack and Slash:</strong> *God of War*, *Devil May Cry*</li>
+                    </ul>
+
+                    <h2>2. Adventure</h2>
+                    <p>Adventure games focus on exploration, puzzle-solving, and narrative progression rather than direct combat. They often have rich storylines and character development.</p>
+                    <h3>Subgenres include:</h3>
+                    <ul>
+                        <li><strong>Graphic Adventures:</strong> *Monkey Island*, *Life is Strange*</li>
+                        <li><strong>Action-Adventure:</strong> *The Legend of Zelda*, *Uncharted*</li>
+                        <li><strong>Survival:</strong> *Minecraft*, *Subnautica*</li>
+                    </ul>
+
+                    <h2>3. Role-Playing Games (RPGs)</h2>
+                    <p>RPGs emphasize character development, storytelling, and often feature complex worlds, deep customization, and strategic combat. Players typically take on the role of a fictional character and progress through quests.</p>
+                    <h3>Subgenres include:</h3>
+                    <ul>
+                        <li><strong>Western RPGs:</strong> *The Witcher 3*, *Fallout*</li>
+                        <li><strong>JRPGs:</strong> *Final Fantasy*, *Persona*</li>
+                        <li><strong>MMORPGs:</strong> *World of Warcraft*, *Final Fantasy XIV*</li>
+                    </ul>
+
+                    <h2>4. Strategy</h2>
+                    <p>Strategy games require players to make tactical and strategic decisions to achieve victory, often involving resource management, army building, and territorial control.</p>
+                    <h3>Subgenres include:</h3>
+                    <ul>
+                        <li><strong>Real-Time Strategy (RTS):</strong> *StarCraft*, *Age of Empires*</li>
+                        <li><strong>Turn-Based Strategy (TBS):</strong> *Civilization*, *XCOM*</li>
+                        <li><strong>Tower Defense:</strong> *Plants vs. Zombies*</li>
+                    </ul>
+
+                    <h2>5. Sports & Racing</h2>
+                    <p>These genres simulate real-world sports or racing events, often with realistic physics and competitive gameplay.</p>
+                    <h3>Examples:</h3>
+                    <ul>
+                        <li><strong>Sports:</strong> *FIFA*, *NBA 2K*</li>
+                        <li><strong>Racing:</strong> *Forza Horizon*, *Gran Turismo*</li>
+                    </ul>
+
+                    <h2>6. Simulation</h2>
+                    <p>Simulation games aim to accurately simulate real-world activities or systems, offering players control over complex environments.</p>
+                    <h3>Examples:</h3>
+                    <ul>
+                        <li><strong>Life Simulation:</strong> *The Sims*</li>
+                        <li><strong>City-Building:</strong> *Cities: Skylines*</li>
+                        <li><strong>Flight Simulators:</strong> *Microsoft Flight Simulator*</li>
+                    </ul>
+
+                    <p>This is just a glimpse into the vast world of game genres. Many games often blend elements from multiple genres, creating unique hybrid experiences. Exploring different genres can broaden your gaming horizons and help you discover new favorites!</p>
+                `
+            }
+        ];
+
+
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Theme Toggle Function - Taken from your index.php
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (currentTheme === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fas fa-sun';
+                currentTheme = 'dark';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.removeAttribute('data-theme');
+                themeIcon.className = 'fas fa-moon';
+                currentTheme = 'light';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Load saved theme - Taken from your index.php
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').className = 'fas fa-sun';
+                currentTheme = 'dark';
+            }
+        }
+
+        // Intersection Observer for scroll animations - Taken from your index.php
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        // Smooth scrolling for navigation links - Taken from your index.php
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll-based navbar styling - Taken from your index.php
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = currentTheme === 'dark' 
+                    ? 'rgba(26, 26, 26, 0.98)' 
+                    : 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = 'var(--shadow-light)';
+            } else {
+                navbar.style.background = currentTheme === 'dark' 
+                    ? 'rgba(26, 26, 26, 0.95)' 
+                    : 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Function to render blog post details
+        function renderBlogPostDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const postId = parseInt(urlParams.get('id'));
+
+            const post = blogPosts.find(p => p.id === postId);
+
+            const postTitleElement = document.getElementById('postTitle');
+            const postHeroTitleElement = document.getElementById('postHeroTitle');
+            const postHeroSubtitleElement = document.getElementById('postHeroSubtitle');
+            const postImageElement = document.getElementById('postImage');
+            const postAuthorElement = document.getElementById('postAuthor');
+            const postDateElement = document.getElementById('postDate');
+            const postContentElement = document.getElementById('postContent');
+
+            if (post) {
+                postTitleElement.textContent = `${post.title} - GameVault Blog`;
+                postHeroTitleElement.textContent = post.title;
+                postHeroSubtitleElement.textContent = `By ${post.author} on ${post.date}`;
+                postImageElement.src = post.image;
+                postImageElement.alt = post.title;
+                postAuthorElement.textContent = post.author;
+                postDateElement.textContent = post.date;
+                postContentElement.innerHTML = post.fullContent;
+            } else {
+                // Handle case where post is not found
+                postTitleElement.textContent = "Blog Post Not Found - GameVault Blog";
+                postHeroTitleElement.textContent = "Blog Post Not Found";
+                postHeroSubtitleElement.textContent = "The article you are looking for does not exist.";
+                postImageElement.src = "https://placehold.co/800x450/cccccc/000000?text=Post+Not+Found";
+                postImageElement.alt = "Post Not Found";
+                postAuthorElement.textContent = "N/A";
+                postDateElement.textContent = "N/A";
+                postContentElement.innerHTML = `<p>We apologize, but the blog post you are trying to access could not be found. Please return to the <a href="blog.html">blog main page</a> to browse other articles.</p>`;
+            }
+        }
+
+        // Notification function (from index.php)
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : 'info'} position-fixed`;
+            notification.style.cssText = `
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                min-width: 300px;
+                box-shadow: var(--shadow-hover);
+                border: none;
+                border-radius: 10px;
+                animation: slideInRight 0.5s ease;
+            `;
+            
+            notification.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'} me-2"></i>
+                    <span>${message}</span>
+                    <button type="button" class="btn-close ms-auto" onclick="this.parentElement.parentElement.remove()"></button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.style.animation = 'slideOutRight 0.5s ease';
+                    setTimeout(() => notification.remove(), 500);
+                }
+            }, 5000);
+        }
+
+        // Easter Egg from index.php
+        let clickCount = 0;
+        document.querySelector('.navbar-brand').addEventListener('click', function(e) {
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 5) {
+                showNotification('🎮 Easter Egg Found! You are a true gamer!', 'success');
+                clickCount = 0;
+                
+                const colors = ['#6c5ce7', '#fd79a8', '#00b894', '#00cec9'];
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.style.cssText = `
+                            position: fixed;
+                            top: -10px;
+                            left: ${Math.random() * 100}%;
+                            width: 10px;
+                            height: 10px;
+                            background: ${colors[Math.floor(Math.random() * colors.length)]};
+                            z-index: 9999;
+                            animation: confettiFall 3s linear forwards;
+                            transform: rotate(${Math.random() * 360}deg);
+                        `;
+                        document.body.appendChild(confetti);
+                        
+                        setTimeout(() => confetti.remove(), 3000);
+                    }, i * 50);
+                }
+                
+                if (!document.getElementById('confetti-style')) {
+                    const confettiStyle = document.createElement('style');
+                    confettiStyle.id = 'confetti-style';
+                    confettiStyle.textContent = `
+                        @keyframes confettiFall {
+                            to {
+                                transform: translateY(100vh) rotate(720deg);
+                                opacity: 0;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(confettiStyle);
+                }
+            }
+        });
+
+        // Initialize page and observe elements
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
+            renderBlogPostDetails(); // Render specific blog post on page load
+            
+            // Observe elements for scroll animations
+            document.querySelectorAll('.scroll-reveal, .blog-post-hero-content, .blog-post-container').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+/* Donate Button specific styles */
+        .btn-donate {
+            background: var(--gradient-secondary); /* Use secondary gradient for distinction */
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1.2rem;
+            color: white;
+            font-weight: 600;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 184, 148, 0.2); /* Shadow for secondary gradient */
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            margin-left: 0.5rem; /* Add some margin from other nav items */
+        }
+
+        .btn-donate:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(0, 184, 148, 0.4);
+        }
+
+        .btn-donate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2); /* White overlay for shimmer */
+            transition: all 0.5s ease;
+            z-index: -1;
+            transform: skewX(-20deg); /* Skew for a dynamic effect */
+        }
+
+        .btn-donate:hover::before {
+            left: 100%;
+        }
+
+        .btn-donate a {
+            color: white; /* Ensure link text is white */
+            text-decoration: none; /* Remove underline */
+        }
